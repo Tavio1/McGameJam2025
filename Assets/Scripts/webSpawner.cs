@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class webSpawner : MonoBehaviour
+public class WebSpawner : MonoBehaviour
 {
     public GameObject webPrefab;
     public GameObject player;
@@ -15,14 +15,6 @@ public class webSpawner : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 worldMousePos;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SpawnWeb();
-        }
-    }
-    // Update is called once per frame
     void SpawnWeb()
     {
         Vector3 pos = player.transform.position;
@@ -69,14 +61,14 @@ public class webSpawner : MonoBehaviour
         }
     }
 
-    void ConnectWebs(WebInfo other, Vector3 contactPoint, WebNode mergedNode)
+    public void ConnectWebs(WebInfo other, Vector3 contactPoint, WebNode mergedNode)
     {
-        InstantiateWeb(other.start.pos, contactPoint, null, mergedNode);
-        InstantiateWeb(contactPoint, other.end.pos, mergedNode);
+        InstantiateWeb(other.start.pos, contactPoint, null, mergedNode, false);
+        InstantiateWeb(contactPoint, other.end.pos, mergedNode, null, false);
         Destroy(other.gameObject);
     }
 
-    WebInfo InstantiateWeb(Vector3 start, Vector3 end, WebNode startNode = null, WebNode endNode = null)
+    WebInfo InstantiateWeb(Vector3 start, Vector3 end, WebNode startNode = null, WebNode endNode = null, bool runAnimations = true)
     {
         GameObject web = Instantiate(webPrefab);
         web.transform.position = start + ((end - start) / 2);
