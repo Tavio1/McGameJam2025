@@ -1152,7 +1152,7 @@ MonoBehaviour:
   manager: {fileID: 0}
   selectedSkin: {fileID: 3141827164690330135}
   ButtonPrefab: {fileID: 4150640525663023439, guid: b0111a281cb98dc4c9ef3a33f58d9504, type: 3}
-  Content: {fileID: 0}
+  Content: {fileID: 5969269646409598105}
 --- !u!225 &229922132086572571
 CanvasGroup:
   m_ObjectHideFlags: 0
