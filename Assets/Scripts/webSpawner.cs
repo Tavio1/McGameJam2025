@@ -15,6 +15,8 @@ public class WebSpawner : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 worldMousePos;
 
+    public float animationSpeed = 3f;
+
     void SpawnWeb()
     {
         Vector3 pos = player.transform.position;
@@ -118,7 +120,7 @@ public class WebSpawner : MonoBehaviour
             float actualLength = Mathf.Min(currLength, targetLength);
             web.transform.localScale = new Vector3(initScale.x, actualLength, initScale.z);
 
-            Vector3 midpoint = start + (end - start).normalized * actualLength * 2 / 2; // Multiply by 2 since scale is halved
+            Vector3 midpoint = start + (end - start).normalized * actualLength * 2 / 2;
             web.transform.position = midpoint; 
             yield return null;
         }
