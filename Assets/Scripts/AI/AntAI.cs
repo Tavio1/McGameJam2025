@@ -6,7 +6,7 @@ public class AntAI : MonoBehaviour
 {
     [Header("AI Properties")]
     [SerializeField]
-    private float fleeRadius = 8.0f;
+    private float fleeRadius = 5.0f;
     [SerializeField]
     [Range(0.0f, 1.0f)]
     private float sameDirectionProbability = 0.5f;
@@ -76,5 +76,12 @@ public class AntAI : MonoBehaviour
     void Update()
     {
         // Flee from player when they are within a certain range
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(transform.position, fleeRadius);
     }
 }
