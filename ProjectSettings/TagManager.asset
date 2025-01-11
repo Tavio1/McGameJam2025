@@ -3,18 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Web
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - player
   - Water
   - UI
-  - 
+  - Ground
   - Flyable
   - Obstacle
-  - 
+  - Web
   - 
   - 
   - 

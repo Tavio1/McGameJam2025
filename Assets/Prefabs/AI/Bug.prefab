@@ -176,7 +176,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextWaypointDistance: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
   recomputationInterval: 3
   arcAngle: 150
   speed: 100
   wanderRadius: 3
+  obstacleCheckRay: 2
