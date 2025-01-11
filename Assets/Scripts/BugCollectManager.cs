@@ -11,8 +11,11 @@ public class BugCollectManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreIndicator;
     [SerializeField] TextMeshProUGUI stopwatch;
 
-    public int score = 0;
-    public int highScore;
+    public static int score = 0;
+    public static int highScore;
+
+    public static int totalScore = 999;
+
     public float timeLeft = 90f;
 
     void Awake(){
@@ -53,6 +56,7 @@ public class BugCollectManager : MonoBehaviour
     public void EndGame(){
         this.enabled = false;
 
+        totalScore += score;
         SceneManager.LoadScene(0);        
 
     }
