@@ -297,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4817388476425632340, guid: 757477458b379fb4ebc64527839548dc, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8688559015674345772, guid: 757477458b379fb4ebc64527839548dc, type: 3}
       propertyPath: m_Layer
@@ -339,6 +339,8 @@ MonoBehaviour:
     m_Bits: 1015
   mousePos: {x: 0, y: 0, z: 0}
   worldMousePos: {x: 0, y: 0, z: 0}
+  animationSpeed: 3
+  animationDuration: 1
 --- !u!1 &1020179865
 GameObject:
   m_ObjectHideFlags: 0

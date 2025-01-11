@@ -14,6 +14,9 @@ public class webSpawner : MonoBehaviour
     public Vector3 mousePos;
     public Vector3 worldMousePos;
 
+    public float animationSpeed = 5f;
+    private float targetLength;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -96,7 +99,7 @@ public class webSpawner : MonoBehaviour
         web.transform.position = start + ((end - start) / 2);
         web.transform.LookAt(end);
         web.transform.Rotate(90, 0, 0);
-        web.transform.localScale = new Vector3(web.transform.localScale.x, (end - start).magnitude / 2, web.transform.localScale.z);
+
         WebInfo webScript = web.GetComponent<WebInfo>();
         if (webScript != null)
         {
@@ -117,6 +120,28 @@ public class webSpawner : MonoBehaviour
         {
             Debug.Log("script not found");
         }
+
+        StartCoroutine(animate(web, start, end));
         return web;
+    }
+
+    private IEnumerator animate(GameObject web, Vector3 start, Vector3 end)
+    {
+        float targetLength = Vector3.Distance(start, end) / 2;
+        float currLength = 0;
+        Vector3 initScale = web.transform.localScale;
+
+        while(currLength < targetLength)
+        {
+            currLength += animationSpeed * Time.deltaTime;
+            float actualLength = Mathf.Min(currLength, targetLength);
+            web.transform.localScale = new Vector3(initScale.x, actualLength, initScale.z);
+
+            Vector3 midpoint = start + (end - start).normalized * actualLength * 2 / 2; // Multiply by 2 since scale is halved
+            web.transform.position = midpoint; 
+            yield return null;
+        }
+
+        web.transform.localScale = new Vector3(initScale.x, targetLength, initScale.z);
     }
 }
