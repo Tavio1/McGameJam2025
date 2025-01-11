@@ -8,7 +8,7 @@ public class webSpawner : MonoBehaviour
     public GameObject player;
     public LayerMask raycastMask;
 
-    private void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -25,19 +25,26 @@ public class webSpawner : MonoBehaviour
         Vector3 worldMousPos = Camera.main.ScreenToWorldPoint(mousePos);
 
         Vector3 dir = worldMousPos - pos;
-        /*RaycastHit hit;
+        RaycastHit hit;
 
         if (Physics.Raycast(pos, dir.normalized, out hit, dir.magnitude, raycastMask))
         {
-            Debug.DrawRay(pos, dir, Color.green, 2f);
+            Debug.DrawRay(pos, dir.normalized * dir.magnitude, Color.green, 2f);
 
             worldMousPos = hit.point;
             Debug.Log("hit point at " + worldMousPos);
-        }*/
+        }
+        else
+        {
+            Debug.DrawRay(pos, dir.normalized * dir.magnitude, Color.red, 2f);
+            Debug.Log("No hit detected.");
+        }
 
+        Debug.Log("raycast done");
         dir = worldMousPos - pos;
         float distance = dir.magnitude;
         Debug.Log("Distance is: " + distance);
+        Debug.Log("start");
 
         GameObject web = Instantiate(webPrefab);
         web.transform.position = pos + dir / 2;
@@ -51,9 +58,7 @@ public class webSpawner : MonoBehaviour
         if (webScript != null)
         {
             webScript.start = pos;
-            Debug.Log("start is " + pos);
             webScript.end = worldMousPos;
-            Debug.Log("end is " + worldMousPos);
         }
         else
         {

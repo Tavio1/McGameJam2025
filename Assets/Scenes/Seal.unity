@@ -309,6 +309,55 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1868885905414738645, guid: 757477458b379fb4ebc64527839548dc, type: 3}
   m_PrefabInstance: {fileID: 139644424}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &890472729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890472731}
+  - component: {fileID: 890472730}
+  m_Layer: 0
+  m_Name: spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &890472730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890472729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41767d1c92c53f46b35c5e19ed1ef72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  webPrefab: {fileID: 6418143378129473256, guid: cbec51a274de53b4eaba72fbef9aaf42, type: 3}
+  player: {fileID: 139644425}
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!4 &890472731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890472729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0018107668, y: 0.25000474, z: -0.06489354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1020179865
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +370,6 @@ GameObject:
   - component: {fileID: 1020179869}
   - component: {fileID: 1020179868}
   - component: {fileID: 1020179867}
-  - component: {fileID: 1020179866}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -329,23 +377,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1020179866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020179865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41767d1c92c53f46b35c5e19ed1ef72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  webPrefab: {fileID: 6418143378129473256, guid: cbec51a274de53b4eaba72fbef9aaf42, type: 3}
-  player: {fileID: 139644425}
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!65 &1020179867
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -839,3 +870,4 @@ SceneRoots:
   - {fileID: 1610932244}
   - {fileID: 1020179870}
   - {fileID: 139644424}
+  - {fileID: 890472731}
