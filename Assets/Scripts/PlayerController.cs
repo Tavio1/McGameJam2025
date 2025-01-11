@@ -24,12 +24,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Web")]
     public bool attached;
-    
+
     //Movement
     public float webSpeed;
     public Vector2 webMoveDir;
     public float radiusToAttach;
     public LayerMask webLayerMask;
+
+    public float movementAngle;
 
     // Graph Stuff
     private WebNode startNode;
@@ -70,7 +72,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Detach() {
+    void Detach()
+    {
         attached = false;
         rb.useGravity = true;
 
@@ -100,14 +103,20 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(new Vector3(1, 5, 0), new Vector3(5, 1, 0));
     }
 
-    void WebControl() {
+    void WebControl()
+    {
         webMoveDir = moveOnWebAction.ReadValue<Vector2>();
-        if(webMoveDir.y > 0) {
-            transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
-        } else if (webMoveDir.y < 0){
-            transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
+        if (webMoveDir != Vector2.zero)
+        {
+            if (Vector3.Angle(webMoveDir, destNode.pos - startNode.pos) < movementAngle)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
+            }
+            else if (Vector3.Angle(webMoveDir, startNode.pos - destNode.pos) < movementAngle)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
+            }
         }
-        
     }
 
     void MovementControl()

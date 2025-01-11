@@ -602,6 +602,7 @@ MonoBehaviour:
   webLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  movementAngle: 45
 --- !u!114 &512029219
 MonoBehaviour:
   m_ObjectHideFlags: 0
