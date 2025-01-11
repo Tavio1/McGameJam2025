@@ -595,6 +595,13 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  attached: 0
+  webSpeed: 10
+  webMoveDir: {x: 0, y: 0}
+  radiusToAttach: 0.5
+  webLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &512029219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,6 +616,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   webPrefab: {fileID: 6418143378129473256, guid: cbec51a274de53b4eaba72fbef9aaf42, type: 3}
   player: {fileID: 512029211}
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1216290344
 GameObject:
   m_ObjectHideFlags: 0
