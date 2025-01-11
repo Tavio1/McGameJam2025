@@ -795,18 +795,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f191977715d3c9f43a2bbf4f8db945ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocations:
-  - {fileID: 412213947}
-  - {fileID: 485946976}
-  - {fileID: 1649200281}
-  - {fileID: 800867633}
-  - {fileID: 469961744}
-  - {fileID: 1180111485}
-  - {fileID: 2142650735}
+  spawnsParent: {fileID: 1275006586}
   bugsParent: {fileID: 0}
   bugPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7986001777519857319, guid: 53691e1c308d94fa19a2f89d68800289, type: 3}
+  - {fileID: 7986001777519857319, guid: 53691e1c308d94fa19a2f89d68800289, type: 3}
 --- !u!4 &1439281503
 Transform:
   m_ObjectHideFlags: 0

@@ -7,8 +7,11 @@ using System;
 public class BugSpawnManager : MonoBehaviour
 {
     // List of spawn locations for the bugs
-    [SerializeField] Transform[] spawnLocations;
+
+
+    [SerializeField] Transform spawnsParent;
     [SerializeField] Transform bugsParent;
+    Transform[] spawnLocations;
 
     // 0: fly, 1: ant
     [SerializeField] GameObject[] bugPrefabs;
@@ -17,7 +20,8 @@ public class BugSpawnManager : MonoBehaviour
     float antSpawnTimer = 0f;
 
     void Start(){
-
+        spawnLocations = spawnsParent.GetComponentsInChildren<Transform>();
+        spawnLocations[0] = spawnLocations[1];
     }
 
     void Update(){
@@ -29,7 +33,7 @@ public class BugSpawnManager : MonoBehaviour
 
 
             Spawn(bugPrefabs[0], findSpawnLocation());
-            Debug.Log("fly spawned");
+            // Debug.Log("fly spawned");
         }
 
         if (antSpawnTimer <= 0f){
@@ -37,7 +41,7 @@ public class BugSpawnManager : MonoBehaviour
 
 
 
-            Debug.Log("ant spawned");
+            // Debug.Log("ant spawned");
         }
     }
 
@@ -52,10 +56,6 @@ public class BugSpawnManager : MonoBehaviour
 
         // Filtered list
         Transform[] offscreenTransforms = spawnLocations.Where(isOffscreen).ToArray();
-        
-        foreach (Transform t in offscreenTransforms){
-            Debug.Log("Location not in view " + t);
-        }
 
         if (offscreenTransforms.Length == 0)
             return null;
@@ -67,7 +67,7 @@ public class BugSpawnManager : MonoBehaviour
     private void Spawn(GameObject bugPrefab, Transform location){
         Debug.Log($"Bug Type: {bugPrefab} Location: {location.gameObject}");
 
-        // Instantiate(bugPrefab, location.position, Quaternion.identity);
+        Instantiate(bugPrefab, location.position, Quaternion.identity);
     }
 
 }
