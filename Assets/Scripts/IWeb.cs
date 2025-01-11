@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IWeb
 {
-    Vector3 getStart();
-    Vector3 getEnd();
+    public Vector3 getStart();
+    public Vector3 getEnd();
 }
