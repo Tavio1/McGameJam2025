@@ -310,37 +310,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1868885905414738645, guid: 757477458b379fb4ebc64527839548dc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 139644426}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 757477458b379fb4ebc64527839548dc, type: 3}
---- !u!1 &139644425 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1868885905414738645, guid: 757477458b379fb4ebc64527839548dc, type: 3}
-  m_PrefabInstance: {fileID: 139644424}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &139644426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 139644425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41767d1c92c53f46b35c5e19ed1ef72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  webPrefab: {fileID: 6418143378129473256, guid: cbec51a274de53b4eaba72fbef9aaf42, type: 3}
-  player: {fileID: 139644425}
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 1015
-  mousePos: {x: 0, y: 0, z: 0}
-  worldMousePos: {x: 0, y: 0, z: 0}
-  animationSpeed: 3
-  animationDuration: 1
 --- !u!1 &1020179865
 GameObject:
   m_ObjectHideFlags: 0
