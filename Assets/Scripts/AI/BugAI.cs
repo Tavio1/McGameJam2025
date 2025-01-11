@@ -63,7 +63,7 @@ public class BugAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody>();
 
-        ComputePath();
+        StartCoroutine(RecomputationCoroutine());
     }
 
     private IEnumerator RecomputationCoroutine()
