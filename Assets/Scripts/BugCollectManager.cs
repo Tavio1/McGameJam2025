@@ -11,6 +11,9 @@ public class BugCollectManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreIndicator;
     [SerializeField] TextMeshProUGUI stopwatch;
 
+    private bool thirtyFlash = true;
+    private bool tenFlash = true;
+
     public static int score = 0;
     public static int highScore;
 
@@ -48,6 +51,17 @@ public class BugCollectManager : MonoBehaviour
 
         stopwatch.text = string.Format("{0:00}:{1:00}", minutes,seconds);
 
+
+        if (minutes == 0 && seconds == 30 && thirtyFlash){
+            thirtyFlash = false;
+            StartCoroutine(FlashTimer(1));
+        }
+
+        if (minutes == 0 && seconds == 10 && tenFlash){
+            tenFlash = false;
+            StartCoroutine(FlashTimer(10));
+        }
+
         if (minutes <= 0 && seconds <= 0){
             EndGame();
         }
@@ -59,6 +73,17 @@ public class BugCollectManager : MonoBehaviour
         totalScore += score;
         SceneManager.LoadScene(0);        
 
+    }
+
+    IEnumerator FlashTimer(int seconds){
+        int iterations = (int) (seconds/0.4) + 1;
+
+        for (int i = 0; i<iterations; i++){
+            stopwatch.color = Color.red;
+            yield return new WaitForSecondsRealtime(0.3f);
+            stopwatch.color = Color.white;
+            yield return new WaitForSecondsRealtime(0.3f);
+        }
     }
 
 }
