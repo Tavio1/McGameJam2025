@@ -12,8 +12,8 @@ public class webSpawner : MonoBehaviour
     public float minWebLength;
     private Vector3 endPoint;
 
-    public Vector3 mousePos;
-    public Vector3 worldMousePos;
+    private Vector3 mousePos;
+    private Vector3 worldMousePos;
 
     void Update()
     {
@@ -47,7 +47,7 @@ public class webSpawner : MonoBehaviour
             WebInfo otherWeb = null;
             if (hit.transform.gameObject.tag == "Web")
             {
-                otherWeb = hit.transform.parent.GetComponent<WebInfo>();
+                otherWeb = hit.transform.GetComponent<WebInfo>();
             }
             WebNode mergedNode = null;
             if (otherWeb != null)

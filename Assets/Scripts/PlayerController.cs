@@ -85,8 +85,8 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
 
-        startNode = new WebNode(new Vector3(5, 1, 0));
-        destNode = new WebNode(new Vector3(1, 5, 0));
+        startNode = web.start;
+        destNode = web.end;
         transform.position = startNode.pos + Vector3.Project(transform.position - startNode.pos, destNode.pos - startNode.pos);
     }
 
