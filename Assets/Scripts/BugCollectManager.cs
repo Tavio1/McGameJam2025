@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BugCollectManager : MonoBehaviour
 {
@@ -10,8 +11,20 @@ public class BugCollectManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreIndicator;
     [SerializeField] TextMeshProUGUI stopwatch;
 
-    public int score;
+    public int score = 0;
+    public int highScore;
     public float timeLeft = 90f;
+
+    void Awake(){
+        if (instance == null){
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+        }
+
+
+    }
 
     /*
     i = 0: denotes a fly collected
@@ -31,6 +44,17 @@ public class BugCollectManager : MonoBehaviour
         int seconds = (int) timeLeft % 60;
 
         stopwatch.text = string.Format("{0:00}:{1:00}", minutes,seconds);
+
+        if (minutes <= 0 && seconds <= 0){
+            EndGame();
+        }
+    }
+
+    public void EndGame(){
+        this.enabled = false;
+
+        SceneManager.LoadScene(0);        
+
     }
 
 }
