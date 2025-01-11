@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (cols[0].gameObject.layer == 9)
                 {
-                    InitializeWebWalk(cols[0].GetComponent<IWeb>());
+                    InitializeWebWalk(cols[0].GetComponent<WebInfo>());
                 }
             }
         }
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void InitializeWebWalk(IWeb web)
+    void InitializeWebWalk(WebInfo web)
     {
         attached = true;
         rb.useGravity = false;
