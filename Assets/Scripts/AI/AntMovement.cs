@@ -10,7 +10,7 @@ public class AntMovement : MonoBehaviour
     private State state = State.STILL;
 
     [SerializeField]
-    private float speed = 3.0f;
+    private float speed = 100.0f;
 
     [SerializeField]
     private Transform meshParent;
@@ -26,6 +26,7 @@ public class AntMovement : MonoBehaviour
 
 
     private bool canSnap = true;
+    private Rigidbody rb;
 
 
 
@@ -60,6 +61,7 @@ public class AntMovement : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         SnapAllDirections();
     }
 
@@ -128,6 +130,7 @@ public class AntMovement : MonoBehaviour
             out hit, snapDistance, obstacleLayer))
         {
             MoveToHit(hit);
+            rb.velocity = Forward * rb.velocity.magnitude;
         }    
     }
 
@@ -142,7 +145,9 @@ public class AntMovement : MonoBehaviour
 
         if (!Mathf.Approximately(angle, transform.rotation.eulerAngles.z))
         {
-            transform.position = hit.point;
+            Vector3 movePos = hit.point;
+            movePos.z = 0;
+            transform.position = movePos;
 
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
@@ -153,12 +158,14 @@ public class AntMovement : MonoBehaviour
     {
         if (state == State.STILL)
         {
+            SnapDown();
             return;
         }
 
         Vector3 moveDirection = state == State.RIGHT ? RightDirection : LeftDirection;
 
-        transform.position += Time.deltaTime * moveDirection * speed;
+        Vector3 force = Time.deltaTime * moveDirection * speed;
+        rb.AddForce(force);
 
         SnapDown();
 

@@ -10,8 +10,10 @@ public class AntAI : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 1.0f)]
     private float sameDirectionProbability = 0.5f;
+    [SerializeField]
     [Range(1.0f, 10.0f)]
     private float minRepathInterval = 3.0f;
+    [SerializeField]
     [Range(1.0f, 10.0f)]
     private float maxRepathInterval = 6.0f;
 
@@ -29,6 +31,14 @@ public class AntAI : MonoBehaviour
     {
         while (true)
         {
+            if (antMovement.MovementState == AntMovement.State.STILL)
+            {
+                if (Random.Range(0, 2) == 0)
+                    antMovement.MovementState = AntMovement.State.LEFT;
+                else
+                    antMovement.MovementState = AntMovement.State.RIGHT;
+            }
+
             float randomVal = Random.Range(0.0f, 1.0f);
             if (randomVal < sameDirectionProbability)
             {
