@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "AttachToWeb",
+                    "type": "Button",
+                    "id": "e87dadf8-23a5-4626-966e-fbb8b6de3611",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -48,6 +57,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "0e9ff58e-d3dd-42ab-a57a-557153efe9dc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttachToWeb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
