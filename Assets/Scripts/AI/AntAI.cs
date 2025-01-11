@@ -18,11 +18,14 @@ public class AntAI : MonoBehaviour
     private float maxRepathInterval = 6.0f;
 
     private AntMovement antMovement;
+    private PlayerController player;
+    private bool isFleeing = false;
 
     // Start is called before the first frame update
     void Start()
     {
         antMovement = GetComponent<AntMovement>();
+        player = FindObjectOfType<PlayerController>();
 
         StartCoroutine(Wander());
     }
@@ -31,6 +34,12 @@ public class AntAI : MonoBehaviour
     {
         while (true)
         {
+            if (isFleeing)
+            {
+                yield return new WaitForSeconds(1.0f);
+                continue;
+            }
+
             if (antMovement.MovementState == AntMovement.State.STILL)
             {
                 if (Random.Range(0, 2) == 0)
@@ -75,7 +84,20 @@ public class AntAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Flee from player when they are within a certain range
+        if (Vector3.Distance(player.transform.position, transform.position) < fleeRadius)
+        {
+            isFleeing = true;
+
+            if (Vector3.Dot(antMovement.RightDirection,
+                player.transform.position - transform.position) > 0)
+            {
+                antMovement.MovementState = AntMovement.State.RIGHT;
+            }
+            else
+            {
+                antMovement.MovementState = AntMovement.State.LEFT;
+            }
+        }
     }
 
     private void OnDrawGizmos()

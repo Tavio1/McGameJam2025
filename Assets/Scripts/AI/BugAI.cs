@@ -8,7 +8,9 @@ public class BugAI : MonoBehaviour
     [SerializeField]
     private float nextWaypointDistance = 1.0f;
     [SerializeField]
-    public LayerMask obstacleLayer;
+    private LayerMask obstacleLayer;
+    [SerializeField]
+    private float fleeRadius = 5.0f;
 
     [Header("Wander Properties")]
     [SerializeField]
@@ -26,6 +28,7 @@ public class BugAI : MonoBehaviour
 
     private Seeker seeker;
     private Rigidbody rb;
+    private PlayerController player;
 
     // Path Movement variables
     private Path path;
@@ -62,6 +65,7 @@ public class BugAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody>();
+        player = FindObjectOfType<PlayerController>();
 
         StartCoroutine(RecomputationCoroutine());
     }
@@ -70,7 +74,14 @@ public class BugAI : MonoBehaviour
     {
         while (true)
         {
-            ComputePath();
+            if (IsInFleeRadius())
+            {
+                ComputeFleePath();
+            }
+            else
+            {
+                ComputePath();
+            }
 
             yield return new WaitForSeconds(recomputationInterval);
         }
@@ -79,6 +90,12 @@ public class BugAI : MonoBehaviour
     private void ComputePath()
     {
         seeker.StartPath(Position, GenerateWanderPoint(), OnPathComplete);
+    }
+
+    private void ComputeFleePath()
+    {
+        Vector3 fleeDir = (Position - player.transform.position).normalized;
+        seeker.StartPath(Position, Position + fleeDir * (fleeRadius / 2));
     }
 
     private Vector3 GenerateWanderPoint()
@@ -109,6 +126,11 @@ public class BugAI : MonoBehaviour
         }
     }
 
+    private bool IsInFleeRadius()
+    {
+        return Vector3.Distance(Position, player.transform.position) < fleeRadius;
+    }
+
     private void FixedUpdate()
     {
         if (path == null)
@@ -117,7 +139,15 @@ public class BugAI : MonoBehaviour
         if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
-            ComputePath();
+
+            if (IsInFleeRadius())
+            {
+                ComputeFleePath();
+            }
+            else
+            {
+                ComputePath();
+            }
             return;
         }
         else
@@ -145,11 +175,14 @@ public class BugAI : MonoBehaviour
 
         const float LINE_LENGTH = 2.0f;
 
-
         Vector3 orientationLine = new Vector3(
             Mathf.Cos(Angle), Mathf.Sin(Angle), 0.0f
             ) * LINE_LENGTH;
         Gizmos.DrawLine(transform.position, transform.position + orientationLine);
+
+        // Flee Range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(Position, fleeRadius);
     }
 
 }
