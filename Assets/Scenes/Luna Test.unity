@@ -602,7 +602,7 @@ MonoBehaviour:
   webLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  movementAngle: 45
+  movementAngle: 50
 --- !u!114 &512029219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,7 +619,8 @@ MonoBehaviour:
   player: {fileID: 512029211}
   raycastMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1015
+  minWebLength: 0.1
 --- !u!1 &1216290344
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,16 +24,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("Web")]
     public bool attached;
+    public WebSpawner spawner;
 
     //Movement
     public float webSpeed;
     public Vector2 webMoveDir;
     public float radiusToAttach;
     public LayerMask webLayerMask;
-
     public float movementAngle;
 
     // Graph Stuff
+    private WebInfo attachedWeb;
     private WebNode startNode;
     private WebNode destNode;
     private InputAction attachToWebAction;
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
         //Web Actions
         moveOnWebAction = playerActions.FindActionMap("Web").FindAction("Move");
 
+        spawner = GetComponent<WebSpawner>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -82,11 +84,12 @@ public class PlayerController : MonoBehaviour
     void InitializeWebWalk(WebInfo web)
     {
         attached = true;
+        attachedWeb = web;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
 
-        startNode = new WebNode(new Vector3(5, 1, 0));
-        destNode = new WebNode(new Vector3(1, 5, 0));
+        startNode = web.start;
+        destNode = web.end;
         transform.position = startNode.pos + Vector3.Project(transform.position - startNode.pos, destNode.pos - startNode.pos);
     }
 

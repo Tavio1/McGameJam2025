@@ -16,7 +16,7 @@ public class ClosingSequence : MonoBehaviour
         points.rectTransform.anchoredPosition = new Vector2(0,-130);
         cg.alpha = 0f;        
 
-        points.text = $"{(BugCollectManager.instance == null ? 5 : BugCollectManager.instance.score)} points";
+        points.text = $"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points";
 
         LeanTween.alphaCanvas(cg, 1f, 1f).setIgnoreTimeScale(true);
         LeanTween.moveLocalY(points.gameObject, -75, 1f).setIgnoreTimeScale(true);
@@ -25,15 +25,15 @@ public class ClosingSequence : MonoBehaviour
         // Optional High Score thing
         if (BugCollectManager.instance != null){
 
-            int score = BugCollectManager.instance.score;
-            int high = BugCollectManager.instance.highScore;
+            int score = BugCollectManager.score;
+            int high = BugCollectManager.highScore;
 
             highScore.text = 
                 score > high ?  
                     "New High Score!" :
                     $"High Score: {high}";
             
-            BugCollectManager.instance.highScore = Math.Max(high, score);
+            BugCollectManager.highScore = Math.Max(high, score);
         }
 
         LeanTween.alphaCanvas(highScore.GetComponent<CanvasGroup>(),1f,0.8f);
