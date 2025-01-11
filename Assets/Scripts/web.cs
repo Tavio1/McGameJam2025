@@ -6,6 +6,7 @@ public class web : MonoBehaviour
 {
     public GameObject webPrefab;
     public GameObject player;
+    public LayerMask raycastMask;
 
     private void Update()
     {
@@ -24,20 +25,26 @@ public class web : MonoBehaviour
         Vector3 worldMousPos = Camera.main.ScreenToWorldPoint(mousePos);
 
         Vector3 dir = worldMousPos - pos;
-/*        RaycastHit hit;
+        RaycastHit hit;
 
-        if (Physics.Raycast(pos, dir.normalized, out hit, dir.magnitude))
+        if (Physics.Raycast(pos, dir.normalized, out hit, dir.magnitude, raycastMask))
         {
+            Debug.DrawRay(pos, dir, Color.green, 2f);
+
             worldMousPos = hit.point;
+            Debug.Log("hit point at " + worldMousPos);
         }
 
-        dir = worldMousPos - pos;*/
+        dir = worldMousPos - pos;
         float distance = dir.magnitude;
+        Debug.Log("Distance is: " + distance);
 
         GameObject web = Instantiate(webPrefab);
         web.transform.position = pos + dir / 2;
         web.transform.LookAt(worldMousPos);
         web.transform.Rotate(90, 0, 0);
 
-        web.transform.localScale = new Vector3(web.transform.localScale.x, distance/2, web.transform.localScale.z);    }
+        web.transform.localScale = new Vector3(web.transform.localScale.x, distance/2, web.transform.localScale.z);
+        Debug.Log("Web scale is: " + web.transform.localScale.x + ", " + distance  + ", " + web.transform.localScale.z);
+    }
 }
