@@ -11,10 +11,13 @@ public class BugSpawnManager : MonoBehaviour
 
     [SerializeField] Transform spawnsParent;
     [SerializeField] Transform bugsParent;
+    [SerializeField] RectTransform miniMap;
+
     Transform[] spawnLocations;
 
     // 0: fly, 1: ant
     [SerializeField] GameObject[] bugPrefabs;
+    [SerializeField] GameObject[] bugMiniPrefabs;
 
     float flySpawnTimer = 0f;
     float antSpawnTimer = 0f;
@@ -31,8 +34,7 @@ public class BugSpawnManager : MonoBehaviour
         if (flySpawnTimer <= 0f){
             flySpawnTimer = 5f;
 
-
-            Spawn(bugPrefabs[0], findSpawnLocation());
+            Spawn(0, findSpawnLocation());
             // Debug.Log("fly spawned");
         }
 
@@ -64,10 +66,15 @@ public class BugSpawnManager : MonoBehaviour
     }
 
     // Spawn Function
-    private void Spawn(GameObject bugPrefab, Transform location){
+    private void Spawn(int i, Transform location){
+        GameObject bugPrefab = bugPrefabs[i];
+
         Debug.Log($"Bug Type: {bugPrefab} Location: {location.gameObject}");
 
-        Instantiate(bugPrefab, location.position, Quaternion.identity);
+        GameObject bug = Instantiate(bugPrefab, location.position, Quaternion.identity, bugsParent);
+
+        // Create an icon on minimap
+        Instantiate(bugMiniPrefabs[i], miniMap).GetComponent<BugMinimap>().Initialize(bug.transform);
     }
 
 }
