@@ -39,11 +39,16 @@ public class webSpawner : MonoBehaviour
         {
             endPoint = hit.point;
             Debug.Log("hit point at " + hit.point);
-            GameObject thisWeb = InstantiateWeb(pos, endPoint);
-            WebInfo otherWeb = hit.transform.parent.GetComponent<WebInfo>();
+            WebInfo otherWeb = null;
+            if(hit.transform.gameObject.tag == "Web") {
+                otherWeb = hit.transform.parent.GetComponent<WebInfo>();
+            }
             if (otherWeb != null)
             {
+                GameObject thisWeb = InstantiateWeb(pos, endPoint);
                 ConnectWebs(thisWeb.GetComponent<WebInfo>(), otherWeb, hit.point);
+            } else {
+                GameObject thisWeb = InstantiateWeb(pos, endPoint);
             }
         }
         else
@@ -76,9 +81,9 @@ public class webSpawner : MonoBehaviour
 
     void ConnectWebs(WebInfo self, WebInfo other, Vector3 contactPoint)
     {
+        WebNode mergedNode = new WebNode(contactPoint);
         GameObject fromStart = InstantiateWeb(other.start.pos, contactPoint);
         GameObject toEnd = InstantiateWeb(contactPoint, other.end.pos);
-        WebNode mergedNode = new WebNode(contactPoint);
         self.end = mergedNode;
         fromStart.GetComponent<WebInfo>().end = mergedNode;
         toEnd.GetComponent<WebInfo>().end = mergedNode;
@@ -95,8 +100,16 @@ public class webSpawner : MonoBehaviour
         WebInfo webScript = web.GetComponent<WebInfo>();
         if (webScript != null)
         {
-            webScript.start = new WebNode(start);
-            webScript.end = new WebNode(endPoint);
+            if(startNode == null) {
+                webScript.start = new WebNode(start);
+            } else {
+                webScript.start = startNode;
+            }
+            if(endNode == null) {
+                webScript.end = new WebNode(endPoint);
+            } else {
+                webScript.end = endNode;
+            }
             webScript.start.addAdjacent(webScript.end);
             webScript.end.addAdjacent(webScript.start);
         }
