@@ -31,7 +31,7 @@ public class BugAI : AI
 
     // Path Movement variables
     private Path path;
-    public int currentWaypoint = 0;
+    private int currentWaypoint = 0;
     private bool reachedEndOfPath = false;
 
     private Vector3 Position
