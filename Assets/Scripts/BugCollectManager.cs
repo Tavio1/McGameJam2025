@@ -8,9 +8,9 @@ public class BugCollectManager : MonoBehaviour
 {
     public static BugCollectManager instance;
 
-    [SerializeField] TextMeshProUGUI scoreIndicator;
-    [SerializeField] TextMeshProUGUI stopwatch;
-    [SerializeField] TimeUpIndicator timeUp;
+    public TextMeshProUGUI scoreIndicator;
+    public TextMeshProUGUI stopwatch;
+    public TimeUpIndicator timeUp;
 
     private bool thirtyFlash = true;
     private bool tenFlash = true;
@@ -21,6 +21,7 @@ public class BugCollectManager : MonoBehaviour
     public static int totalScore = 999;
 
     public float timeLeft = 120f;
+    public bool ended;
 
     void Awake(){
         if (instance == null){
@@ -29,8 +30,7 @@ public class BugCollectManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
-
-
+        ended = false;
     }
 
     /*
@@ -54,9 +54,14 @@ public class BugCollectManager : MonoBehaviour
         int minutes = (int) timeLeft / 60;
         int seconds = (int) timeLeft % 60;
 
-        stopwatch.text = string.Format("{0:00}:{1:00}", minutes,seconds);
+        if(stopwatch != null) {
+            stopwatch.text = string.Format("{0:00}:{1:00}", minutes,seconds);
+        }
 
-
+        if(minutes > 0 && seconds > 0) {
+            ended = false;
+        }
+        
         if (minutes == 0 && seconds == 30 && thirtyFlash){
             thirtyFlash = false;
             StartCoroutine(FlashTimer(1));
@@ -68,17 +73,15 @@ public class BugCollectManager : MonoBehaviour
             StartCoroutine(FlashTimer(10));
         }
 
-        if (minutes <= 0 && seconds <= 0){
+        if (minutes <= 0 && seconds <= 0 & !ended){
             AudioManager.INSTANCE.stopClockTicking();
             EndGame();
         }
     }
 
     public void EndGame(){
-
-        this.enabled = false;
         totalScore += score;
-
+        ended = true;
         timeUp.StartTimeUp();
     }
 
