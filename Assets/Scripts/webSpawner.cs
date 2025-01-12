@@ -57,7 +57,7 @@ public class WebSpawner : MonoBehaviour
             endPoint = worldMousePos;
             if (Vector3.Distance(origin, endPoint) < minWebLength)
             {
-                return;
+                return null;
             }
             return InstantiateWeb(origin, endPoint, mergedStartNode);
         }
