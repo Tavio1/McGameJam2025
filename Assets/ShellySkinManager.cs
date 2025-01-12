@@ -11,24 +11,11 @@ public class ShellySkinManager : MonoBehaviour
     void Start()
     {
         Skin skin = SkinsManager.instance.selectedSkin;
-        string skinname = skin == null ? null : skin.name;
 
-        Debug.Log("this script is reached");
-
-        switch (skinname)
+        foreach (Renderer r in renderers)
         {
-            case "Golden Shelly":
+            r.material = skin.SkinMaterial;
+        }
 
-                foreach (Renderer r in renderers){
-                    r.material = skin.SkinMaterial;
-                }
-
-                break;
-
-            default:
-
-
-                break;
-        }   
     }
 }
