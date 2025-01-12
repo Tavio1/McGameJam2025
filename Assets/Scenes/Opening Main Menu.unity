@@ -540,6 +540,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &776597043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776597045}
+  - component: {fileID: 776597044}
+  m_Layer: 0
+  m_Name: SkinsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &776597044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776597043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6e891081139fe4c8cc88dedcf2f429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableSkins:
+  - {fileID: 11400000, guid: 74537e2fb0aac8d4888942df0ee12560, type: 2}
+  - {fileID: 11400000, guid: 0bbb5d876aa283846a302d41a760c699, type: 2}
+  - {fileID: 11400000, guid: c546bb71740f38144bf4b104e037466f, type: 2}
+  - {fileID: 11400000, guid: 2907f8645b77359418aca3dc65f4208f, type: 2}
+  - {fileID: 11400000, guid: 856d656e7197fdd4788e6f56ffc3dc76, type: 2}
+  - {fileID: 11400000, guid: c60f73f567789814f9fbc56646a4aa5c, type: 2}
+--- !u!4 &776597045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776597043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.87112, y: 2.4926069, z: 20.715595}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &877548903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1414,7 +1465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5969269646409598105, guid: 913621034841eb1499c26156e0f67f7f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 800
+      value: 799.99994
       objectReference: {fileID: 0}
     - target: {fileID: 6492706809255390920, guid: 913621034841eb1499c26156e0f67f7f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2847,3 +2898,4 @@ SceneRoots:
   - {fileID: 1883061762}
   - {fileID: 446641502}
   - {fileID: 506739025}
+  - {fileID: 776597045}
