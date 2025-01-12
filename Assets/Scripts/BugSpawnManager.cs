@@ -24,6 +24,7 @@ public class BugSpawnManager : MonoBehaviour
 
     [Header("Materials")]
     [SerializeField] Material goldMaterial;
+    [SerializeField] Material[] Outlines;
 
     float flySpawnTimer = 0f;
     float antSpawnTimer = 0f;
@@ -82,7 +83,7 @@ public class BugSpawnManager : MonoBehaviour
 
         // Check for spawning a golden insect
         if (UnityEngine.Random.value <= 0.1){
-            
+
             Renderer[] renderers = bug.GetComponentsInChildren<Renderer>();
             foreach (Renderer rend in renderers){
                 rend.material = goldMaterial;
@@ -97,11 +98,20 @@ public class BugSpawnManager : MonoBehaviour
 
         // Check for spawning one with power up
         if (UnityEngine.Random.value <= 0.1){
-            cakeslice.Outline outline = bug.AddComponent(typeof(cakeslice.Outline)) as cakeslice.Outline;
+            // cakeslice.Outline outline = bug.AddComponent(typeof(cakeslice.Outline)) as cakeslice.Outline;
 
             // Color: 0=red, 1=green, 2=blue
-            int type = UnityEngine.Random.Range(0, 3);
-            outline.color = type;
+            int type = UnityEngine.Random.Range(0, 2);
+
+            SkinnedMeshRenderer[] renderers = bug.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer r in renderers){
+                Material[] materials = new Material[2];
+                materials[0] = r.materials[0];
+                materials[1] = Outlines[0];
+                r.materials = materials;
+            }
+
             return;
         }
 
