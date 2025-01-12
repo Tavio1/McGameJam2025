@@ -18,14 +18,15 @@ public class AntAI : AI
     private float maxRepathInterval = 6.0f;
 
     private AntMovement antMovement;
-    private PlayerController player;
+    private Transform player;
     private bool isFleeing = false;
 
     // Start is called before the first frame update
     void Start()
     {
         antMovement = GetComponent<AntMovement>();
-        player = FindObjectOfType<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        // player = FindObjectOfType<PlayerController>();
 
         StartCoroutine(Wander());
     }
