@@ -69,6 +69,7 @@ public class AntMovement : MonoBehaviour
     }
 
     private float targetAngle = 0.0f;
+    private bool isRotating = false;
 
     //---------------------------------------------------------------
 
@@ -120,10 +121,17 @@ public class AntMovement : MonoBehaviour
         RaycastHit hit;
         Vector3 down = DownDirection;
 
+        const float THRESHOLD = 1.5f;
+
         if (Physics.Raycast(transform.position - down * 0.3f, down, out hit,
-            float.MaxValue, obstacleLayer))
+            float.MaxValue, obstacleLayer) && hit.distance < THRESHOLD)
         {
             MoveToHit(hit, true);
+        }
+        else if (Physics.Raycast(transform.position + down * 0.3f, -Forward, out hit,
+            float.MaxValue, obstacleLayer) && hit.distance < THRESHOLD)
+        {
+            MoveToHit(hit, true, false, false);
         }
     }
 
@@ -139,7 +147,7 @@ public class AntMovement : MonoBehaviour
         }    
     }
 
-    private void MoveToHit(RaycastHit hit, bool force = false, bool snap = false)
+    private void MoveToHit(RaycastHit hit, bool force = false, bool snap = false, bool longRotation = false)
     {
         Vector3 hitNormal = hit.normal;
         float angle = Mathf.Acos(Vector3.Dot(Vector3.up, hit.normal) / hitNormal.magnitude) * Mathf.Rad2Deg;
@@ -165,14 +173,16 @@ public class AntMovement : MonoBehaviour
             targetAngle = angle;
 
             if (snap || Mathf.Abs(transform.rotation.eulerAngles.z - angle) < THRESHOLD)
-            { 
+            {
                 transform.rotation = Quaternion.Euler(0, 0, angle);
-                
+
             }
             else
             {
-                StartCoroutine(RotateToWall(angle));
+                StartCoroutine(RotateToWall(angle, longRotation));
             }
+
+            //transform.rotation = Quaternion.Euler(0, 0, angle);
 
         }
     }
@@ -197,37 +207,64 @@ public class AntMovement : MonoBehaviour
 
     }
 
-    private IEnumerator RotateToWall(float angle)
+    private IEnumerator RotateToWall(float angle, bool longRotation = false)
     {
-        float angle2 = 360 + angle;
-
-        float currentAngle = transform.eulerAngles.z;
-
-        float diff = Mathf.Abs(angle - currentAngle);
-        float diff2 = Mathf.Abs(angle2 - currentAngle);
-
-        if (diff2 < diff)
+        if (!isRotating)
         {
-            diff = diff2;
-            angle = angle2;
+            isRotating = true;
+
+            float angle2 = -360 + angle;
+            
+            float angle3 = 360 + angle;
+
+            float currentAngle = transform.eulerAngles.z;
+
+            float diff = Mathf.Abs(angle - currentAngle);
+            float diff2 = Mathf.Abs(angle2 - currentAngle);
+            float diff3 = Mathf.Abs(angle3 - currentAngle);
+
+            if (!longRotation)
+            {
+                diff = Mathf.Min(diff, diff2, diff3);
+
+                if (diff == diff2)
+                    angle = angle2;
+
+                if (diff == diff3)
+                    angle = angle3;
+            }
+            else
+            {
+                diff = Mathf.Max(diff, diff2);
+
+                if (diff == diff2)
+                    angle = angle2;
+            }
+
+            Debug.Log($"original angle {currentAngle} destination angle {angle}");
+
+            const float THRESHOLD = 5;
+            const float TIME_INTERVAL = 0.01f;
+
+            while (Mathf.Abs((angle + 360) % 360 - transform.eulerAngles.z) > THRESHOLD)
+            {
+                //currentAngle += TIME_INTERVAL * rotateSpeed;
+                currentAngle = Mathf.Lerp(currentAngle, angle, rotateSpeed / 10000);
+
+                transform.rotation = Quaternion.Euler(0, 0, currentAngle);
+
+                yield return new WaitForSeconds(TIME_INTERVAL);
+            }
+
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            Debug.Log("DONE");
+
+            isRotating = false;
         }
 
-        //Debug.Log($"original angle {currentAngle} destination angle {angle}");
 
-        const float THRESHOLD = 2;
-        const float TIME_INTERVAL = 0.01f;
-
-        while (Mathf.Abs(angle - transform.eulerAngles.z) > THRESHOLD)
-        {
-            //currentAngle += TIME_INTERVAL * rotateSpeed;
-            currentAngle = Mathf.Lerp(currentAngle, angle, rotateSpeed / (diff * diff));
-
-            transform.rotation = Quaternion.Euler(0, 0, currentAngle);
-
-            yield return new WaitForSeconds(TIME_INTERVAL);
-        }
-
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        
     }
 
     private IEnumerator SwitchDirection()
