@@ -111,12 +111,22 @@ public class AudioManager : MonoBehaviour
 
     public void stopClockTicking() {
         ClockSource.Stop();
+        ClockSource.PlayOneShot(GameSFX["Alarm"], 0.2f);
     }
 
     // UI SFX
     public void playUIClick()
     {
         UISource.PlayOneShot(UISFX["UIClick"], 0.2f);
+    }
+
+    public void playGatchaRollSuccess() {
+        UISource.PlayOneShot(UISFX["GatchaRollSuccess"], 0.2f);
+    }
+
+    public void playGatchaRollFail()
+    {
+        UISource.PlayOneShot(UISFX["GatchaRollFail"], 0.2f);
     }
 
     public void startMainMenuMusic() {
