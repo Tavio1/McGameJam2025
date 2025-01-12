@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BugMinimap : MonoBehaviour
 {
@@ -29,7 +30,16 @@ public class BugMinimap : MonoBehaviour
     }
 
     private void CalcPosition(){
-        Vector3 pos = bug.position;
+        Vector3 pos = Vector3.zero;
+        try
+        {
+            pos = bug.position;
+
+        }
+        catch (NullReferenceException e)
+        {
+            Destroy(gameObject);
+        }
 
         float relX = ((pos.x + 23) / MinimapSystem.mapWidth) * 400;
         float relY = (pos.y/ MinimapSystem.mapHeight) * 173;

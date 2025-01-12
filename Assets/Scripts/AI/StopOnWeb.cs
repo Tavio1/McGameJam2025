@@ -6,9 +6,6 @@ public class StopOnWeb : MonoBehaviour
 {
     public AI ai;
 
-    [SerializeField]
-    private GameObject cocoonPrefab;
-
     void Start()
     {
         ai = GetComponent<AI>();
