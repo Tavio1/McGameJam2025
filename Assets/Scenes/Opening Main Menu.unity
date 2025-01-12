@@ -540,57 +540,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &705882473 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3178536359046197858, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
-  m_PrefabInstance: {fileID: 877548903}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 780631482}
-  - component: {fileID: 780631481}
-  m_Layer: 0
-  m_Name: SkinsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &780631481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780631480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6e891081139fe4c8cc88dedcf2f429, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableSkins:
-  - {fileID: 11400000, guid: 0bbb5d876aa283846a302d41a760c699, type: 2}
-  - {fileID: 11400000, guid: c546bb71740f38144bf4b104e037466f, type: 2}
-  - {fileID: 11400000, guid: 2907f8645b77359418aca3dc65f4208f, type: 2}
-  - {fileID: 11400000, guid: 856d656e7197fdd4788e6f56ffc3dc76, type: 2}
-  - {fileID: 11400000, guid: c60f73f567789814f9fbc56646a4aa5c, type: 2}
-  - {fileID: 11400000, guid: eeec51b8cd3c8dd48b539167fd88dc17, type: 2}
-  - {fileID: 11400000, guid: 8638cf0f01fd3c244b58d016904e4ec8, type: 2}
---- !u!4 &780631482
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780631480}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 165.69348, y: 116.410164, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &877548903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1465,7 +1414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5969269646409598105, guid: 913621034841eb1499c26156e0f67f7f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 799.99994
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 6492706809255390920, guid: 913621034841eb1499c26156e0f67f7f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1843,6 +1792,7 @@ GameObject:
   - component: {fileID: 1553511403}
   - component: {fileID: 1553511402}
   - component: {fileID: 1553511401}
+  - component: {fileID: 1553511404}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1924,6 +1874,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553511404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553511400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1580939526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,7 +2221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: db3fa7c53824d9c4ca373a4e20ccd595, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
