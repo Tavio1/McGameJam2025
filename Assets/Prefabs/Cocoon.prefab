@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5874684588774739091}
   - component: {fileID: 4273930926269065880}
   - component: {fileID: 1398645279562522247}
+  - component: {fileID: 5245057208096513788}
   m_Layer: 12
   m_Name: Cocoon
   m_TagString: Untagged
@@ -133,3 +134,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!114 &5245057208096513788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058326352139331398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2139e301bfe114835a34cd931f97081a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactMask:
+    serializedVersion: 2
+    m_Bits: 8
+  fly0Ant1: 0

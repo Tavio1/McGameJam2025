@@ -104,7 +104,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        AudioManager.INSTANCE.playWebShoot();
+        if (AudioManager.INSTANCE != null)
+            AudioManager.INSTANCE.playWebShoot();
 
         Collider[] cols = Physics.OverlapSphere(transform.position, 0.05f, webLayerMask, QueryTriggerInteraction.Collide);
         if (attached && cols.Length > 0 && cols[0].gameObject.tag == "Web")

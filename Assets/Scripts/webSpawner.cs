@@ -159,7 +159,8 @@ public class WebSpawner : MonoBehaviour
             yield return null;
         }
 
-        AudioManager.INSTANCE.playWebCollide();
+        if (AudioManager.INSTANCE != null)
+            AudioManager.INSTANCE.playWebCollide();
 
         web.transform.localScale = new Vector3(initScale.x, targetLength, initScale.z);
 
@@ -168,12 +169,14 @@ public class WebSpawner : MonoBehaviour
             Debug.Log("Deleting!");
             Destroy(web);
             GameObject bug = GameObject.FindGameObjectWithTag("BugToCocoon");
-            Vector3 cocoonPos = bug.transform.position;
+            Transform cocoonPos = bug.transform;
+            bool isFlyMore = bug.GetComponent<DieOnContact>().fly0Ant1 == 0;
             Destroy(bug);
 
             GameObject cocoon = Instantiate(cocoonPrefab);
-            web.transform.position = bug.transform.position;
-            web.transform.Rotate(0, 0, 0);
+            cocoon.transform.position = cocoonPos.position;
+            cocoon.transform.rotation = cocoonPos.rotation;
+            cocoon.GetComponent<DieOnContact>().fly0Ant1 = isFlyMore ? 0 : 1;
         }
     }
 }

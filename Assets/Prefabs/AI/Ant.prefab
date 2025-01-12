@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 7899109682937775830}
   - component: {fileID: 823751161053491876}
   - component: {fileID: -2149987023037712540}
+  - component: {fileID: -2122320435255659161}
   m_Layer: 11
   m_Name: Ant
   m_TagString: Untagged
@@ -192,6 +193,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ai: {fileID: 0}
+--- !u!114 &-2122320435255659161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205442352639395446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2139e301bfe114835a34cd931f97081a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactMask:
+    serializedVersion: 2
+    m_Bits: 8
+  fly0Ant1: 0
 --- !u!1001 &3713983667359930854
 PrefabInstance:
   m_ObjectHideFlags: 0
