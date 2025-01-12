@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class Slot : MonoBehaviour
 {
@@ -9,8 +10,10 @@ public class Slot : MonoBehaviour
     private SlotMachine slotMachine;
     private SlotRow slot;
 
-    private bool normal = true;
+    public bool rig = false;
     float speed;
+
+
 
     Color[] testColors = {
         Color.magenta,
@@ -38,9 +41,20 @@ public class Slot : MonoBehaviour
             
             // Reset its position and change value
             if (yPos <= -450){
-                yPos += 3*225;
-                GetComponent<Image>().color = testColors[Random.Range(0,testColors.Length)];
+                
+                Skin[] skins = SkinsManager.instance.availableSkins;
+                Skin skin;
 
+                if (rig && slotMachine.chosenOne != null){
+                    skin = slotMachine.chosenOne;
+                } else {
+                    skin = skins[Random.Range(0, skins.Length)];
+                }
+                
+
+                GetComponentInChildren<TextMeshProUGUI>().text = skin.SkinName;
+
+                yPos += 3*225;
             }
 
             rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, yPos);

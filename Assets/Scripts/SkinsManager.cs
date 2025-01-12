@@ -6,7 +6,7 @@ public class SkinsManager : MonoBehaviour
 {
     public static SkinsManager instance;
 
-    public SkinOption[] availableSkins;
+    public Skin[] availableSkins;
     public HashSet<Skin> ownedSkins = new HashSet<Skin>();
 
     void Awake(){
@@ -22,6 +22,8 @@ public class SkinsManager : MonoBehaviour
     public void CollectSkin(Skin skin){
         ownedSkins.Add(skin);
     }
+
+
 
 
 

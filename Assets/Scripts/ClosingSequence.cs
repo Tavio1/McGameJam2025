@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClosingSequence : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI points;
     [SerializeField] TextMeshProUGUI highScore;
+
+    [SerializeField] GameObject overlay;
+    [SerializeField] CanvasGroup FadeBlack;
 
     // Start is called before the first frame update
     IEnumerator Start(){
@@ -37,11 +41,27 @@ public class ClosingSequence : MonoBehaviour
         }
 
         LeanTween.alphaCanvas(highScore.GetComponent<CanvasGroup>(),1f,0.8f);
+        yield return new WaitForSecondsRealtime(0.4f);
 
+        LeanTween.moveY(overlay, 300, 0.5f).setIgnoreTimeScale(true);
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        LeanTween.moveY(overlay, 320, 0.15f).setIgnoreTimeScale(true);
 
     }
 
-    public void OpenSwitchSkin(){
 
+    // 0 for menu, 1 for play again
+    public void PlayAgainAndMenu(int scene){
+        StartCoroutine(SwitchScene(scene));
     }
+
+    IEnumerator SwitchScene(int scene){
+        LeanTween.alphaCanvas(FadeBlack, 1f, 0.8f).setIgnoreTimeScale(true);
+        yield return new WaitForSecondsRealtime(0.8f);
+
+        SceneManager.LoadScene(scene);
+    }
+
+
 }
