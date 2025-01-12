@@ -187,6 +187,7 @@ public class PlayerController : MonoBehaviour
             Collider[] cols = Physics.OverlapSphere(transform.position, radiusToAttach, webLayerMask, QueryTriggerInteraction.Collide);
             if (cols.Length > 0)
             {
+
                 if (cols[0].gameObject.tag == "Web")
                 {
                     InitializeWebWalk(cols[0].GetComponent<WebInfo>());
@@ -230,6 +231,9 @@ public class PlayerController : MonoBehaviour
             MovementControl();
             if (grounded && moveDir != 0f)
             {
+                if (!GameplayBottomTextManager.INSTANCE.tipShown()) {
+                    
+                }
                 AudioManager.INSTANCE.startWalkOnGround();
                 modelAni.SetBool("Moving", true);
             }
@@ -259,6 +263,21 @@ public class PlayerController : MonoBehaviour
             webShotCooldown -= Time.fixedDeltaTime;
         }
 
+    }
+
+    IEnumerator checkForCloseToWeb() {
+        while (true) {
+            Collider[] cols = Physics.OverlapSphere(transform.position, radiusToAttach, webLayerMask, QueryTriggerInteraction.Collide);
+            if (cols.Length > 0)
+            {
+                if (cols[0].gameObject.tag == "Web")
+                {
+
+                }
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     void PointTowards(Vector3 dest)
