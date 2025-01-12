@@ -4,10 +4,13 @@ using System.Data.Common;
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
+
+    public GameObject WebSpawnObject;
 
     [Header("Movement")]
     public float speed;
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void PerformShootWeb (){
+    void PerformShootWeb (Vector3 towardsPoint){
         if (onNode)
         {
             TooCloseToNode();
@@ -101,12 +104,18 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        AudioManager.INSTANCE.playWebShoot();
+
         Collider[] cols = Physics.OverlapSphere(transform.position, 0.05f, webLayerMask, QueryTriggerInteraction.Collide);
         if (attached && cols.Length > 0 && cols[0].gameObject.tag == "Web")
         {
             attachedWeb = cols[0].GetComponent<WebInfo>();
         }
-        WebNode newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+
+        WebNode newStartNode = null;
+
+        newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+
         if (newStartNode != null)
         {
             if (attached)
@@ -125,8 +134,21 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DelayWeb() {
         modelAni.SetTrigger("ShootWeb");
+
+        Vector3 mousePos = getWorldMousePos();
+
         yield return new WaitForSeconds(webShotDelay);
-        PerformShootWeb();
+        PerformShootWeb(mousePos);
+    }
+
+    private Vector3 getWorldMousePos() {
+        Vector3 mousePos = Input.mousePosition;
+
+        mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldMousePos.z = 0;
+
+        return worldMousePos;
     }
 
     void Jump(InputAction.CallbackContext ctx)
@@ -194,10 +216,12 @@ public class PlayerController : MonoBehaviour
             MovementControl();
             if (grounded && moveDir != 0f)
             {
+                AudioManager.INSTANCE.startWalkOnGround();
                 modelAni.SetBool("Moving", true);
             }
             else
             {
+                AudioManager.INSTANCE.stopWalkingSound();
                 modelAni.SetBool("Moving", false);
             }
         }
@@ -207,10 +231,12 @@ public class PlayerController : MonoBehaviour
             WebControl();
             if (webMoveDir != Vector2.zero)
             {
+                AudioManager.INSTANCE.startWalkOnWeb();
                 modelAni.SetBool("Moving", true);
             }
             else
             {
+                AudioManager.INSTANCE.stopWalkingSound();   
                 modelAni.SetBool("Moving", false);
             }
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SwitchSkinMenu : MonoBehaviour
 {
@@ -9,15 +10,23 @@ public class SwitchSkinMenu : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI selectedSkin;
 
-    private GameObject[] Skins = new GameObject[2];
+    private Skin[] skins;
 
     [SerializeField] GameObject ButtonPrefab;
     [SerializeField] Transform Content;
 
 
     void Start(){
-        for (int i = 0; i<Skins.Length; i++){
-            // Instantiate(ButtonPrefab, Content);
+        skins = SkinsManager.instance.availableSkins;
+
+        foreach (Skin s in skins){
+
+            GameObject button = Instantiate(ButtonPrefab, Content);
+
+            button.GetComponent<SkinOption>().skin = s;
+            button.GetComponentInChildren<TextMeshProUGUI>().text = s.SkinName;
+
+            button.GetComponent<Button>().interactable = SkinsManager.instance.ownedSkins.Contains(s);
         }
     }
 
@@ -32,5 +41,13 @@ public class SwitchSkinMenu : MonoBehaviour
 
     public void UseThisSkin(SkinOption skin){
         selectedSkin.text = skin.SkinName;
+    }
+
+    public void EvaluateAvailableSkins(){
+        Button[] buttons = Content.GetComponentsInChildren<Button>();
+
+        foreach (Button b in buttons){
+            b.interactable = SkinsManager.instance.ownedSkins.Contains(b.GetComponent<SkinOption>().skin);
+        }
     }
 }

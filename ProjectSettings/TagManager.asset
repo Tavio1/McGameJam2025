@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Web
+  - BugToCocoon
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Obstacle
   - Web
   - transition
-  - 
-  - 
+  - Bug
+  - Cocoon
   - 
   - 
   - 

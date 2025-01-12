@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class WebSpawner : MonoBehaviour
 {
     public GameObject webPrefab;
+    public GameObject cocoonPrefab;
     public LayerMask raycastMask;
     public float minWebLength;
     public float maxWebLength;
@@ -27,10 +29,19 @@ public class WebSpawner : MonoBehaviour
         worldMousePos.z = 0;
 
         Vector3 dir = worldMousePos - origin;
-        RaycastHit hit;
+        RaycastHit hitForward;
+        RaycastHit hitBackward;
 
-        if (Physics.Raycast(origin, dir.normalized, out hit, maxWebLength, raycastMask))
-        {
+        if (Physics.Raycast(origin, dir.normalized, out hitForward, maxWebLength, raycastMask)) {
+
+            // If you hit a bug
+            if (hitForward.collider.gameObject.layer == 11) {
+                Debug.Log("Bug Hit!");
+                hitForward.collider.gameObject.tag = "BugToCocoon";
+                WebNode tempWeb = InstantiateWeb(origin, hitForward.point, null, null, true, false, true);
+                return null;
+            }
+
             WebNode mergedStartNode = null;
             if (attachedTo != null)
             {
@@ -38,13 +49,22 @@ public class WebSpawner : MonoBehaviour
                 mergedStartNode = new WebNode(origin);
                 ConnectWebs(attachedTo, origin, mergedStartNode);
             }
-            endPoint = hit.point;
-            Debug.Log("hit point at " + hit.point);
+            else if (Physics.Raycast(origin, -dir.normalized, out hitBackward, 1.0f, raycastMask))
+            {
+                origin = hitBackward.point;
+            }
+            else {
+                origin -= new Vector3(0, 0.5f, 0);
+            }
+
+            endPoint = hitForward.point;
+            
+            //Debug.Log("hit point at " + hitForward.point);
             if (Vector3.Distance(origin, endPoint) < minWebLength)
             {
                 return null;
             }
-            WebInfo otherWeb = hit.transform.GetComponent<WebInfo>(); ;
+            WebInfo otherWeb = hitForward.transform.GetComponent<WebInfo>(); ;
             WebNode mergedNode = null;
             if (otherWeb != null)
             {
@@ -75,7 +95,7 @@ public class WebSpawner : MonoBehaviour
         Destroy(other.gameObject);
     }
 
-    WebNode InstantiateWeb(Vector3 start, Vector3 end, WebNode startNode = null, WebNode endNode = null, bool runAnimations = true, bool setAdjacencies = true)
+    WebNode InstantiateWeb(Vector3 start, Vector3 end, WebNode startNode = null, WebNode endNode = null, bool runAnimations = true, bool setAdjacencies = true, bool deleteAfter = false)
     {
         GameObject web = Instantiate(webPrefab);
         web.transform.position = start + ((end - start) / 2);
@@ -113,7 +133,7 @@ public class WebSpawner : MonoBehaviour
         }
         if (runAnimations)
         {
-            StartCoroutine(animate(web, start, end));
+            StartCoroutine(animate(web, start, end, deleteAfter));
         }
         else
         {
@@ -122,7 +142,7 @@ public class WebSpawner : MonoBehaviour
         return webScript.start;
     }
 
-    private IEnumerator animate(GameObject web, Vector3 start, Vector3 end)
+    private IEnumerator animate(GameObject web, Vector3 start, Vector3 end, bool deleteAfter = false)
     {
         float targetLength = Vector3.Distance(start, end) / 2;
         float currLength = 0;
@@ -139,6 +159,21 @@ public class WebSpawner : MonoBehaviour
             yield return null;
         }
 
+        AudioManager.INSTANCE.playWebCollide();
+
         web.transform.localScale = new Vector3(initScale.x, targetLength, initScale.z);
+
+        if (deleteAfter)
+        {
+            Debug.Log("Deleting!");
+            Destroy(web);
+            GameObject bug = GameObject.FindGameObjectWithTag("BugToCocoon");
+            Vector3 cocoonPos = bug.transform.position;
+            Destroy(bug);
+
+            GameObject cocoon = Instantiate(cocoonPrefab);
+            web.transform.position = bug.transform.position;
+            web.transform.Rotate(0, 0, 0);
+        }
     }
 }

@@ -31,7 +31,10 @@ public class ClosedMenuManager : MonoBehaviour
 
     IEnumerator OpenSkinMenuProcess(bool open){
 
-        if (open) SkinMenu.SetActive(true);
+        if (open) {
+            SkinMenu.SetActive(true);
+            SkinMenu.GetComponent<SwitchSkinMenu>().EvaluateAvailableSkins();
+        }
 
         LeanTween.moveLocalY(SkinMenu, open ? 0 : 1200f, 0.8f);
         LeanTween.alphaCanvas(skinCG, open ? 1 : 0, 0.8f);

@@ -31,8 +31,8 @@ public class BugMinimap : MonoBehaviour
     private void CalcPosition(){
         Vector3 pos = bug.position;
 
-        float relX = (pos.x / MinimapSystem.mapWidth) * 390;
-        float relY = (pos.y/ MinimapSystem.mapHeight) * 290;
+        float relX = ((pos.x + 23) / MinimapSystem.mapWidth) * 400;
+        float relY = (pos.y/ MinimapSystem.mapHeight) * 173;
 
         bugMini.anchoredPosition = new Vector2(relX, relY);
     }
