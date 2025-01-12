@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [Header("Web")]
     public bool attached;
     public WebSpawner spawner;
+    public float webShotDelay;
 
     //Movement
     public float webSpeed;
@@ -65,6 +66,11 @@ public class PlayerController : MonoBehaviour
     private InputAction moveOnWebAction;
     private InputAction shootWebAction;
 
+    [Header("Animation")]
+    public Animator ani;
+    public Animator modelAni;
+    public Transform rotParent;
+
     void Start()
     {
         playerActions.Enable();
@@ -84,27 +90,49 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void ShootWeb(InputAction.CallbackContext ctx)
-    {
-        if(onNode) {
+    void PerformShootWeb (){
+        if (onNode)
+        {
             TooCloseToNode();
             return;
         }
+        if (!attached && !grounded)
+        {
+            return;
+        }
+
         Collider[] cols = Physics.OverlapSphere(transform.position, 0.05f, webLayerMask, QueryTriggerInteraction.Collide);
-        if(attached && cols.Length > 0 && cols[0].gameObject.tag == "Web") {
+        if (attached && cols.Length > 0 && cols[0].gameObject.tag == "Web")
+        {
             attachedWeb = cols[0].GetComponent<WebInfo>();
         }
         WebNode newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
-        if (newStartNode != null && attached)
+        if (newStartNode != null)
         {
-            transform.position = newStartNode.pos;
-            startNode = newStartNode;
-            destNode = null;
+            if (attached)
+            {
+                transform.position = newStartNode.pos;
+                startNode = newStartNode;
+                destNode = null;
+            }
         }
     }
 
-    void Jump(InputAction.CallbackContext ctx) {
-        if(!grounded) {
+    void ShootWeb(InputAction.CallbackContext ctx)
+    {
+        StartCoroutine(DelayWeb());
+    }
+
+    IEnumerator DelayWeb() {
+        modelAni.SetTrigger("ShootWeb");
+        yield return new WaitForSeconds(webShotDelay);
+        PerformShootWeb();
+    }
+
+    void Jump(InputAction.CallbackContext ctx)
+    {
+        if (!grounded)
+        {
             return;
         }
         jumping = true;
@@ -129,6 +157,7 @@ public class PlayerController : MonoBehaviour
                 if (cols[0].gameObject.tag == "Web")
                 {
                     InitializeWebWalk(cols[0].GetComponent<WebInfo>());
+                    rotParent.localScale = new Vector3(1, 1, 1);
                 }
             }
             grounded = true;
@@ -138,14 +167,17 @@ public class PlayerController : MonoBehaviour
     void Detach()
     {
         attached = false;
+        ani.SetBool("Attached", false);
         rb.useGravity = true;
         attachedWeb = null;
         onNode = false;
+        rotParent.localEulerAngles = Vector3.zero;
     }
 
     void InitializeWebWalk(WebInfo web)
     {
         attached = true;
+        ani.SetBool("Attached", true);
         attachedWeb = web;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
@@ -160,27 +192,63 @@ public class PlayerController : MonoBehaviour
         if (!attached)
         {
             MovementControl();
+            if (grounded && moveDir != 0f)
+            {
+                modelAni.SetBool("Moving", true);
+            }
+            else
+            {
+                modelAni.SetBool("Moving", false);
+            }
         }
         else
         {
             grounded = true;
             WebControl();
+            if (webMoveDir != Vector2.zero)
+            {
+                modelAni.SetBool("Moving", true);
+            }
+            else
+            {
+                modelAni.SetBool("Moving", false);
+            }
         }
+
+
+    }
+
+    void PointTowards(Vector3 dest)
+    {
+        float rotX = Vector3.Angle(Vector3.left, (dest - transform.position).normalized);
+        if(dest.y < transform.position.y) {
+            rotX *= -1;
+        }
+        rotParent.localRotation = Quaternion.Euler(rotX,0,0);
+        // rotParent.localEulerAngles = Vector3.zero;
+        // rotParent.Rotate(new Vector3(rotX, 0, 0));
     }
 
     void WebControl()
     {
         webMoveDir = moveOnWebAction.ReadValue<Vector2>();
+
         if (webMoveDir != Vector2.zero)
         {
             if (destNode != null)
             {
                 if (Vector3.Angle(webMoveDir, destNode.pos - startNode.pos) < movementAngle)
                 {
+                    if(moveOnWebAction.phase == InputActionPhase.Started) {
+                        PointTowards(destNode.pos);
+                    }
                     transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
                 }
                 else if (Vector3.Angle(webMoveDir, startNode.pos - destNode.pos) < movementAngle)
                 {
+                    if(moveOnWebAction.phase == InputActionPhase.Started) {
+                        PointTowards(startNode.pos);
+                    }
                     transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
                 }
             }
@@ -221,6 +289,11 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = moveAction.ReadValue<float>();
 
+        if (moveDir != 0)
+        {
+            rotParent.localScale = new Vector3(1, 1, -moveDir);
+        }
+
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, groundLayerMask);
 
@@ -235,9 +308,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.Cross(hit.normal, Vector3.forward * moveDir).normalized * speed, Time.deltaTime * accel);
         }
 
-        if(Physics.Raycast(transform.position, Vector3.down, groundcheckHeight, groundLayerMask)) {
+        if (Physics.Raycast(transform.position, Vector3.down, groundcheckHeight, groundLayerMask))
+        {
             grounded = true;
-        } else {
+        }
+        else
+        {
             grounded = false;
         }
 
@@ -256,12 +332,15 @@ public class PlayerController : MonoBehaviour
         return !(Vector3.Angle(hit.normal, Vector3.up) < 0.01);
     }
 
-    public void TooCloseToNode() {
+    public void TooCloseToNode()
+    {
 
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.layer == 6) {
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 6)
+        {
             jumping = false;
         }
     }
