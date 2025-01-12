@@ -13,6 +13,9 @@ public class AntMovement : MonoBehaviour
     private float speed = 100.0f;
 
     [SerializeField]
+    private float rotateSpeed = 360.0f;
+
+    [SerializeField]
     private Transform meshParent;
 
     [SerializeField]
@@ -28,13 +31,21 @@ public class AntMovement : MonoBehaviour
     private bool canSnap = true;
     private Rigidbody rb;
 
-
+    public State directionState;
 
 
     public State MovementState
     {
         get => state;
-        set => state = value;
+        set
+        {
+            state = value;
+            if (value != State.STILL && directionState != value)
+            {
+                directionState = value;
+                StartCoroutine(SwitchDirection());
+            }
+        }
     }
 
     public Vector3 RightDirection
@@ -167,11 +178,33 @@ public class AntMovement : MonoBehaviour
 
         SnapDown();
 
-        meshParent.localRotation = Quaternion.Euler(0, state == State.RIGHT ? 0 : 180, 0);
-
         CheckWall();
 
     }
+
+    private IEnumerator SwitchDirection()
+    {
+        float destinationAngle = directionState == State.RIGHT ? 0 : 180;
+        float currentAngle = directionState == State.RIGHT ? 180 : 0;
+
+        float diff = Mathf.Abs(destinationAngle - currentAngle);
+
+        const float THRESHOLD = 3;
+        const float TIME_INTERVAL = 0.01f;
+
+        while (Mathf.Abs(destinationAngle - meshParent.transform.localEulerAngles.y) > THRESHOLD)
+        {
+            //currentAngle += TIME_INTERVAL * rotateSpeed;
+            currentAngle = Mathf.Lerp(currentAngle, destinationAngle, rotateSpeed * rotateSpeed * TIME_INTERVAL / (diff * diff));
+
+            meshParent.localRotation = Quaternion.Euler(0, currentAngle, 0);
+
+            yield return new WaitForSeconds(TIME_INTERVAL);
+        }
+
+        meshParent.localRotation = Quaternion.Euler(0, destinationAngle, 0);
+
+    }    
 
     public void WebCaught()
     {
