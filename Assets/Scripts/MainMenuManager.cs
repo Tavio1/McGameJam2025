@@ -21,7 +21,8 @@ public class ClosedMenuManager : MonoBehaviour
 
         skinCG.alpha = 0f;
         gachaCG.alpha = 0f;
-        
+
+        AudioManager.INSTANCE.startMainMenuMusic();
     }    
 
 
@@ -32,6 +33,7 @@ public class ClosedMenuManager : MonoBehaviour
     IEnumerator OpenSkinMenuProcess(bool open){
 
         if (open) {
+            AudioManager.INSTANCE.playUIClick();
             SkinMenu.SetActive(true);
             SkinMenu.GetComponent<SwitchSkinMenu>().EvaluateAvailableSkins();
         }
@@ -50,7 +52,10 @@ public class ClosedMenuManager : MonoBehaviour
 
     IEnumerator OpenGachaMenuProcess(bool open){
 
-        if (open) GachaMenu.SetActive(true);
+        if (open) {
+            AudioManager.INSTANCE.playUIClick();
+            GachaMenu.SetActive(true);
+        }
 
         LeanTween.moveLocalY(GachaMenu, open ? 0 : -1200f, 0.8f);
         LeanTween.alphaCanvas(gachaCG, open ? 1 : 0, 0.8f);

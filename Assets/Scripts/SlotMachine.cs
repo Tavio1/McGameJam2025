@@ -75,6 +75,15 @@ public class SlotMachine : MonoBehaviour
 
         }
 
+        if (chosenOne == null)
+        {
+            AudioManager.INSTANCE.playGatchaFail();
+        }
+        else {
+            AudioManager.INSTANCE.playGatchaSuccess();
+        }
+
+
         if (chosenOne != null && !SkinsManager.instance.ownedSkins.Contains(chosenOne)){
             SkinsManager.instance.ownedSkins.Add(chosenOne);
         }

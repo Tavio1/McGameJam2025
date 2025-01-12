@@ -25,6 +25,8 @@ public class OpeningUIManager : MonoBehaviour
     }
 
     public void open(int num){
+
+        AudioManager.INSTANCE.playUIClick();
         StartCoroutine(load(num));
     }
 
@@ -36,6 +38,8 @@ public class OpeningUIManager : MonoBehaviour
     }
 
     public void ExitGame(){
+
+        AudioManager.INSTANCE.playUIClick();
         Application.Quit();
     }
 

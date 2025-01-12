@@ -315,11 +315,15 @@ MonoBehaviour:
   - GatchaRoll
   - GatchaRollSuccess
   - GatchaRollFail
+  - GatchaSuccess
+  - GatchaFail
   UISFXClips:
   - {fileID: 8300000, guid: 3b968226384eb1e448b15c294546f881, type: 3}
   - {fileID: 8300000, guid: fc1fe1978efc7644691f31b4fed3f7fd, type: 3}
   - {fileID: 8300000, guid: d6553fa35a8504f43be5b6a72a7b76a0, type: 3}
   - {fileID: 8300000, guid: 72d561bb4b7f7394b9be88264ae7a157, type: 3}
+  - {fileID: 8300000, guid: ecbc9417ea5b20c4da9200521635ceac, type: 3}
+  - {fileID: 8300000, guid: 321676694c8d47c41a9d4140761fece1, type: 3}
   GameSFXNames:
   - Gulp
   - PlayerMoveGround
