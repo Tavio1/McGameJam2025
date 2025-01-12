@@ -15,6 +15,8 @@ public class SlotRow : MonoBehaviour
 
     [SerializeField] RectTransform riggedMiddleOne;
 
+    [SerializeField] float rollTime;
+
     [SerializeField] RectTransform[] slots = new RectTransform[3]; 
 
     public void SlowDown(){
@@ -30,7 +32,8 @@ public class SlotRow : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        riggedMiddleOne.GetComponent<Slot>().rig = true;
+        yield return new WaitForSecondsRealtime(rollTime);
 
 
         while (riggedMiddleOne.anchoredPosition.y > 10 || riggedMiddleOne.anchoredPosition.y < -10){
@@ -39,21 +42,12 @@ public class SlotRow : MonoBehaviour
 
         speed = 0f;
 
-        Debug.Log($"am i reaching {gameObject}");
-
         riggedMiddleOne.anchoredPosition = new Vector2(riggedMiddleOne.anchoredPosition.x, 0);
         slots[0].anchoredPosition = new Vector2(slots[0].anchoredPosition.x, 225);
-        Debug.Log($"{gameObject} {slots[0].anchoredPosition} {slots[0]}");
         slots[2].anchoredPosition = new Vector2(slots[2].anchoredPosition.x, -225);
-        Debug.Log($"{gameObject} {slots[2].anchoredPosition} {slots[2]}");
 
-        
-        Debug.Log("Selected " + riggedMiddleOne.GetComponent<Image>().color);
+        machine.SlotCompleted();
+        riggedMiddleOne.GetComponent<Slot>().rig = false;
 
-        machine.rolled[index] = riggedMiddleOne.GetComponent<Image>().color;
-
-        if (index == 2){
-            machine.SlotResult();
-        }
     }
 }

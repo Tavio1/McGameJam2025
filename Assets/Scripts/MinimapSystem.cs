@@ -7,8 +7,8 @@ public class MinimapSystem : MonoBehaviour
     [SerializeField] RectTransform playerMini;
     [SerializeField] Transform player;
 
-    public const float mapWidth = 80f;
-    public const float mapHeight = 80f;
+    public const float mapWidth = 46f;
+    public const float mapHeight = 20f;
 
 
     // Update is called once per frame
@@ -16,8 +16,8 @@ public class MinimapSystem : MonoBehaviour
     {
         Vector3 pos = player.position;
 
-        float relX = (pos.x / mapWidth) * 390;
-        float relY = (pos.y/ mapHeight) * 290;
+        float relX = ((pos.x + 23) / mapWidth) * 400;
+        float relY = (pos.y/ mapHeight) * 173;
 
         playerMini.anchoredPosition = new Vector2(relX, relY);
     }

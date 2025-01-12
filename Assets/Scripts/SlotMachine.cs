@@ -14,24 +14,34 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] TextMeshProUGUI ResultText;
     [SerializeField] TextMeshProUGUI PointsText;
 
+    public int slotsCompleted;
+
     public Color[] rolled = new Color[3];
 
+    public Skin chosenOne = null;
 
     void Start(){
         PointsText.text = $"Points: {BugCollectManager.totalScore}";
     }
 
     public void StartSlots(int amount){
-        
+        slotsCompleted = 0;
+
         if (BugCollectManager.totalScore < 5){
             Debug.Log("you're too poor");
             return;
-
         } 
 
         BugCollectManager.totalScore -= 5;
-
         PointsText.text = $"Points: {BugCollectManager.totalScore}";
+
+        // Decide whether or not something is won
+        float gamble = Random.value;
+        if (gamble <= 0.5f){
+            chosenOne = SkinsManager.instance.availableSkins[Random.Range(0, SkinsManager.instance.availableSkins.Length)];
+        } else {
+            chosenOne = null;
+        }
         
         Running = true;
         ResultText.text = "";
@@ -51,21 +61,22 @@ public class SlotMachine : MonoBehaviour
     IEnumerator stopSlots(){
         for (int i = 0; i<3; i++){
             slotRows[i].SlowDown();
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(0.8f);
         }
     }
 
-    public void SlotResult(){
-        Color goal = rolled[0];
-        bool result = true;
+    public void SlotCompleted(){
+        slotsCompleted++;
 
-        for (int i = 1; i<3; i++){
-            if (rolled[i] != goal){
-                result = false;
-                break;
-            }
+        if (slotsCompleted == 3){
+            ResultText.text = 
+                chosenOne == null ? "You didn't win. Try again!" 
+                : $"You won the {chosenOne.SkinName} skin!"; 
+
         }
 
-        ResultText.text = result ? $"You won {goal}" : "You didn't win anything!";
+        if (chosenOne != null && !SkinsManager.instance.ownedSkins.Contains(chosenOne)){
+            SkinsManager.instance.ownedSkins.Add(chosenOne);
+        }
     }
 }

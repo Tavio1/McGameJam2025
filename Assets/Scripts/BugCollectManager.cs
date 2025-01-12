@@ -18,7 +18,7 @@ public class BugCollectManager : MonoBehaviour
     public static int score = 0;
     public static int highScore;
 
-    public static int totalScore = 999;
+    public static int totalScore = 0;
 
     public float timeLeft = 90f;
 
