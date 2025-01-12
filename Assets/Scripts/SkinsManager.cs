@@ -9,6 +9,8 @@ public class SkinsManager : MonoBehaviour
     public Skin[] availableSkins;
     public HashSet<Skin> ownedSkins = new HashSet<Skin>();
 
+    public Skin selectedSkin = null;
+
     void Awake(){
 
         if (instance == null){

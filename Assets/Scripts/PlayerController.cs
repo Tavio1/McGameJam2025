@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     public bool attached;
     public WebSpawner spawner;
     public float webShotDelay;
+    private float webShotCooldown;
+    public float webShotCooldownTime;
 
     //Movement
     public float webSpeed;
@@ -137,10 +139,11 @@ public class PlayerController : MonoBehaviour
 
     void ShootWeb(InputAction.CallbackContext ctx)
     {
-        if (FindObjectOfType(typeof (PlayerController)) != null) StartCoroutine(DelayWeb());
+        if (FindObjectOfType(typeof (PlayerController)) != null && webShotCooldown <= 0) StartCoroutine(DelayWeb());
     }
 
     IEnumerator DelayWeb() {
+        webShotCooldown = webShotCooldownTime;
         modelAni.SetTrigger("ShootWeb");
 
         Vector3 mousePos = getWorldMousePos();
@@ -251,7 +254,10 @@ public class PlayerController : MonoBehaviour
                 modelAni.SetBool("Moving", false);
             }
         }
-
+        
+        if(webShotCooldown > 0) {
+            webShotCooldown -= Time.fixedDeltaTime;
+        }
 
     }
 

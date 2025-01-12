@@ -452,6 +452,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2907f8645b77359418aca3dc65f4208f, type: 2}
   - {fileID: 11400000, guid: 856d656e7197fdd4788e6f56ffc3dc76, type: 2}
   - {fileID: 11400000, guid: c60f73f567789814f9fbc56646a4aa5c, type: 2}
+  selectedSkin: {fileID: 0}
 --- !u!4 &776597045
 Transform:
   m_ObjectHideFlags: 0
@@ -564,16 +565,20 @@ PrefabInstance:
       value: OpenGachaMenu
       objectReference: {fileID: 0}
     - target: {fileID: 2187273746040094184, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187273746040094184, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: m_Color.b
-      value: 0.33598343
+      value: 0.40000004
       objectReference: {fileID: 0}
     - target: {fileID: 2187273746040094184, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: m_Color.g
-      value: 0.29239342
+      value: 0.35686275
       objectReference: {fileID: 0}
     - target: {fileID: 2187273746040094184, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: m_Color.r
-      value: 0.40251565
+      value: 0.4666667
       objectReference: {fileID: 0}
     - target: {fileID: 3611761690708375044, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: manager
@@ -582,6 +587,22 @@ PrefabInstance:
     - target: {fileID: 4600342609924437208, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: m_Name
       value: Gacha Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904894113907505551, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5acd87ab7a598ea45a20d9ea03d9e592, type: 3}
+    - target: {fileID: 5904894113907505551, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904894113907505551, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904894113907505551, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

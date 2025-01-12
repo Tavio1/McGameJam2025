@@ -13,6 +13,8 @@ public class ExteriorFade : MonoBehaviour
     
     void OnTriggerEnter(Collider other){
 
+        Debug.Log("" + tag + " _ entered");
+
         if (other.tag != "Player") return;
         Debug.Log("entered");
         if(isInside){

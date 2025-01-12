@@ -36,7 +36,7 @@ public class BugMinimap : MonoBehaviour
             pos = bug.position;
 
         }
-        catch (NullReferenceException e)
+        catch (Exception e)
         {
             Destroy(gameObject);
         }
