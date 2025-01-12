@@ -6,7 +6,7 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NoFriction
+  m_Name: MapHitboxes
   dynamicFriction: 0
   staticFriction: 12.69
   bounciness: 0

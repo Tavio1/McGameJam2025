@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
 
+    public GameObject WebSpawnObject;
+
     [Header("Movement")]
     public float speed;
     public float accel;
@@ -108,7 +110,17 @@ public class PlayerController : MonoBehaviour
         {
             attachedWeb = cols[0].GetComponent<WebInfo>();
         }
-        WebNode newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+
+        WebNode newStartNode = null;
+
+        if (attached)
+        {
+            newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+        }
+        else if (grounded) {
+            newStartNode = spawner.SpawnWeb(WebSpawnObject.transform.position, attachedWeb);
+        } 
+
         if (newStartNode != null)
         {
             if (attached)
