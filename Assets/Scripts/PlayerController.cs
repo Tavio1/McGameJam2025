@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,13 +34,31 @@ public class PlayerController : MonoBehaviour
     public float radiusToAttach;
     public LayerMask webLayerMask;
     public float movementAngle;
+    public float radiusToConnectToNode;
 
     // Graph Stuff
     private WebInfo attachedWeb;
     private WebNode startNode;
     private WebNode destNode;
+    public bool onNode;
+
+    private bool closeToStartNode
+    {
+        get
+        {
+            return Vector3.Distance(startNode.pos, transform.position) < radiusToConnectToNode;
+        }
+    }
+    private bool closeToEndNode
+    {
+        get
+        {
+            return Vector3.Distance(destNode.pos, transform.position) < radiusToConnectToNode;
+        }
+    }
     private InputAction attachToWebAction;
     private InputAction moveOnWebAction;
+    private InputAction shootWebAction;
 
     void Start()
     {
@@ -47,12 +67,33 @@ public class PlayerController : MonoBehaviour
         moveAction = playerActions.FindActionMap("Basic").FindAction("Move");
         attachToWebAction = playerActions.FindActionMap("Basic").FindAction("AttachToWeb");
         attachToWebAction.performed += Attach;
+        shootWebAction = playerActions.FindActionMap("Basic").FindAction("ShootWeb");
+        shootWebAction.performed += ShootWeb;
 
         //Web Actions
         moveOnWebAction = playerActions.FindActionMap("Web").FindAction("Move");
 
         spawner = GetComponent<WebSpawner>();
         rb = GetComponent<Rigidbody>();
+    }
+
+    void ShootWeb(InputAction.CallbackContext ctx)
+    {
+        if(onNode) {
+            TooCloseToNode();
+            return;
+        }
+        Collider[] cols = Physics.OverlapSphere(transform.position, 0.05f, webLayerMask, QueryTriggerInteraction.Collide);
+        if(attached && cols.Length > 0 && cols[0].gameObject.tag == "Web") {
+            attachedWeb = cols[0].GetComponent<WebInfo>();
+        }
+        WebNode newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+        if (newStartNode != null && attached)
+        {
+            transform.position = newStartNode.pos;
+            startNode = newStartNode;
+            destNode = null;
+        }
     }
 
     void Attach(InputAction.CallbackContext ctx)
@@ -66,7 +107,7 @@ public class PlayerController : MonoBehaviour
             Collider[] cols = Physics.OverlapSphere(transform.position, radiusToAttach, webLayerMask, QueryTriggerInteraction.Collide);
             if (cols.Length > 0)
             {
-                if (cols[0].gameObject.layer == 9)
+                if (cols[0].gameObject.tag == "Web")
                 {
                     InitializeWebWalk(cols[0].GetComponent<WebInfo>());
                 }
@@ -78,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         attached = false;
         rb.useGravity = true;
-
+        attachedWeb = null;
     }
 
     void InitializeWebWalk(WebInfo web)
@@ -103,7 +144,6 @@ public class PlayerController : MonoBehaviour
         {
             WebControl();
         }
-        Debug.DrawLine(new Vector3(1, 5, 0), new Vector3(5, 1, 0));
     }
 
     void WebControl()
@@ -111,14 +151,64 @@ public class PlayerController : MonoBehaviour
         webMoveDir = moveOnWebAction.ReadValue<Vector2>();
         if (webMoveDir != Vector2.zero)
         {
-            if (Vector3.Angle(webMoveDir, destNode.pos - startNode.pos) < movementAngle)
+            if (destNode != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
+                if (Vector3.Angle(webMoveDir, destNode.pos - startNode.pos) < movementAngle)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
+                }
+                else if (Vector3.Angle(webMoveDir, startNode.pos - destNode.pos) < movementAngle)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
+                }
             }
-            else if (Vector3.Angle(webMoveDir, startNode.pos - destNode.pos) < movementAngle)
+            if (destNode != null && closeToEndNode && !onNode)
             {
-                transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
+                startNode = destNode;
+                destNode = null;
+                onNode = true;
+                //transform.position = startNode.pos;
+                Debug.Log("on end node: " + startNode.pos);
             }
+            else if (startNode != null && closeToStartNode && !onNode)
+            {
+                destNode = null;
+                onNode = true;
+                //transform.position = startNode.pos;
+                Debug.Log("returned to start node: " + startNode.pos);
+            }
+            else if (!closeToStartNode && destNode != null && !closeToEndNode)
+            {
+                onNode = false;
+            }
+            if (onNode)
+            {
+                float minAngle = 90;
+                WebNode minNode = null;
+                foreach (WebNode node in startNode.adjacent)
+                {
+                    float angle = Vector3.Angle(webMoveDir, node.pos - startNode.pos);
+                    if (angle < minAngle && angle < movementAngle)
+                    {
+                        minNode = node;
+                        minAngle = angle;
+                    }
+                }
+                destNode = minNode;
+                if (destNode != null)
+                {
+                    Debug.Log("dest node: " + destNode.pos);
+                }
+            }
+        }
+        if (Input.GetKey(KeyCode.R))
+        {
+            string adj = "";
+            foreach (WebNode node in startNode.adjacent)
+            {
+                adj += node.pos + "\n";
+            }
+            Debug.Log(adj);
         }
     }
 
@@ -153,5 +243,9 @@ public class PlayerController : MonoBehaviour
     bool SlopeCheck(RaycastHit hit)
     {
         return !(Vector3.Angle(hit.normal, Vector3.up) < 0.01);
+    }
+
+    public void TooCloseToNode() {
+
     }
 }
