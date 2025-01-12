@@ -52,5 +52,13 @@ public class AudioTest : MonoBehaviour
         {
             AudioManager.INSTANCE.playWebCollide();
         }
+
+        if (Input.GetKeyDown(KeyCode.N)) {
+            AudioManager.INSTANCE.startClockTicking();
+        }
+
+        if (Input.GetKeyDown(KeyCode.M)) { 
+            AudioManager.INSTANCE.stopClockTicking();
+        }
     }
 }

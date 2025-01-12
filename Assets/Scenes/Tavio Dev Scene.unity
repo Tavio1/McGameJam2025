@@ -854,12 +854,14 @@ MonoBehaviour:
   - WebClimb
   - WebShoot
   - WebCollide
+  - ClockTicking
   GameSFXClips:
   - {fileID: 8300000, guid: b81fd4d6d50973b4b96931683497f944, type: 3}
   - {fileID: 8300000, guid: ca8c964f7243b0a4ea09384e5673b7e7, type: 3}
   - {fileID: 8300000, guid: 41cb2f5144e14e849a257223be42cb6b, type: 3}
   - {fileID: 8300000, guid: 0ed9104311f433844a95fdec35cb8245, type: 3}
   - {fileID: 8300000, guid: e7790b54419b6c44597043611deebdd2, type: 3}
+  - {fileID: 8300000, guid: cfd85dab238211a4fac34786c13a3461, type: 3}
   BackgroundSFXNames:
   - MainMenuMusic
   - ClassroomAmbient

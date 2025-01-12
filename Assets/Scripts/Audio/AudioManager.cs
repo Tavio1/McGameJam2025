@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource BackgroundSource;
     [SerializeField]
     private AudioSource WalkingSource;
+    [SerializeField]
+    private AudioSource ClockSource;
 
 
     [Header("Audio Clips")]
@@ -63,8 +65,9 @@ public class AudioManager : MonoBehaviour
 
 
         // Start the background music
-        BackgroundSource.mute = true;
-        startMainMenuMusic();
+        //BackgroundSource.mute = true;
+        //startMainMenuMusic();
+        startClassroomAmbient();
         
     }
 
@@ -96,8 +99,19 @@ public class AudioManager : MonoBehaviour
         WalkingSource.Stop();
     }
 
+    public void startClassroomAmbient() {
+        // source should be at 0.02
+        startSourceWithLoopingClip(BackgroundSource, BackgroundSFX["ClassroomAmbient"]);
+    }
 
+    public void startClockTicking() {
+        ClockSource.clip = GameSFX["ClockTicking"];
+        ClockSource.Play();
+    }
 
+    public void stopClockTicking() {
+        ClockSource.Stop();
+    }
 
     // UI SFX
     public void playUIClick()
@@ -106,6 +120,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public void startMainMenuMusic() {
+        // source should be at 0.007
         startSourceWithLoopingClip(BackgroundSource, BackgroundSFX["MainMenuMusic"]);
     }
 
