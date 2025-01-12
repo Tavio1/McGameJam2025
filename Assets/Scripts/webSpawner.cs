@@ -171,12 +171,14 @@ public class WebSpawner : MonoBehaviour
             GameObject bug = GameObject.FindGameObjectWithTag("BugToCocoon");
             Transform cocoonPos = bug.transform;
             bool isFlyMore = bug.GetComponent<DieOnContact>().fly0Ant1 == 0;
+            bool isGolden = bug.GetComponent<BugStats>().isGolden;
             Destroy(bug);
 
             GameObject cocoon = Instantiate(cocoonPrefab);
             cocoon.transform.position = cocoonPos.position;
             cocoon.transform.rotation = cocoonPos.rotation;
             cocoon.GetComponent<DieOnContact>().fly0Ant1 = isFlyMore ? 0 : 1;
+            cocoon.GetComponent<BugStats>().isGolden = true;
         }
     }
 }

@@ -18,6 +18,8 @@ public class DieOnContact : MonoBehaviour
                 BugCollectManager.instance.CollectBug(fly0Ant1, GetComponent<BugStats>().isGolden);
 
             Destroy(gameObject);
+
+            AudioManager.INSTANCE.playGulp();
         }
     }
 }
