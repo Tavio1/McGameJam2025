@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -8493179930926745676}
   - component: {fileID: -9164027980173679421}
   - component: {fileID: 3447948562408419711}
+  - component: {fileID: 5212530279257730367}
   m_Layer: 0
   m_Name: Bug
   m_TagString: Untagged
@@ -185,9 +186,10 @@ MonoBehaviour:
   fleeRadius: 5
   recomputationInterval: 3
   arcAngle: 150
-  speed: 100
+  speed: 250
   wanderRadius: 3
   obstacleCheckRay: 2
+  currentWaypoint: 0
 --- !u!114 &3447948562408419711
 MonoBehaviour:
   m_ObjectHideFlags: 0

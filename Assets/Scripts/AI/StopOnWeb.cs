@@ -15,6 +15,7 @@ public class StopOnWeb : MonoBehaviour
     {
         if (other.tag == "Web")
         {
+            ai.Kill();
             ai.enabled = false;
         }
     }

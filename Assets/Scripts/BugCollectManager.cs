@@ -10,6 +10,7 @@ public class BugCollectManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI scoreIndicator;
     [SerializeField] TextMeshProUGUI stopwatch;
+    [SerializeField] TimeUpIndicator timeUp;
 
     private bool thirtyFlash = true;
     private bool tenFlash = true;
@@ -69,10 +70,9 @@ public class BugCollectManager : MonoBehaviour
 
     public void EndGame(){
         this.enabled = false;
-
         totalScore += score;
-        SceneManager.LoadScene(0);        
 
+        timeUp.StartTimeUp();
     }
 
     IEnumerator FlashTimer(int seconds){

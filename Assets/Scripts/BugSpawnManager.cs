@@ -26,12 +26,16 @@ public class BugSpawnManager : MonoBehaviour
     [SerializeField] Material goldMaterial;
     [SerializeField] Material[] Outlines;
 
-    float flySpawnTimer = 0f;
-    float antSpawnTimer = 0f;
+    float flySpawnTimer = 5f;
+    float antSpawnTimer = 5f;
 
     void Start(){
         spawnLocations = spawnsParent.GetComponentsInChildren<Transform>();
         spawnLocations[0] = spawnLocations[1];
+
+        foreach (Transform t in spawnLocations){
+            Debug.Log(t.position);
+        }
     }
 
     void Update(){
@@ -65,7 +69,7 @@ public class BugSpawnManager : MonoBehaviour
         Transform[] offscreenTransforms = spawnLocations.Where(isOffscreen).ToArray();
 
         if (offscreenTransforms.Length == 0)
-            return null;
+            return spawnLocations[1];
 
         return offscreenTransforms[UnityEngine.Random.Range(0, offscreenTransforms.Length)];
     }
@@ -74,10 +78,12 @@ public class BugSpawnManager : MonoBehaviour
 
     // Spawn Function
     private void Spawn(int i, Transform location){
+        Debug.Log($"Location picked: {location.position}");
+
         GameObject bugPrefab = bugPrefabs[i];
         GameObject bug = Instantiate(bugPrefab, location.position, Quaternion.identity, bugsParent);
 
-
+        Debug.Log($"the bug's position is {bug.transform.position} and location is {location.position} and bug is {bug}");
         GameObject minimapIcon = Instantiate(bugMiniPrefabs[i], miniMap); 
         minimapIcon.GetComponent<BugMinimap>().Initialize(bug.transform);
 
@@ -111,9 +117,10 @@ public class BugSpawnManager : MonoBehaviour
                 materials[1] = Outlines[0];
                 r.materials = materials;
             }
-
             return;
         }
+
+        
 
         
         // Create an icon on minimap
