@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class OpeningUIManager : MonoBehaviour
 {
     [SerializeField] GameObject Buttons;
+    public Animator transition;
 
     // Start is called before the first frame update
     IEnumerator Start()
@@ -21,6 +22,13 @@ public class OpeningUIManager : MonoBehaviour
     }
 
     public void open(int num){
+        StartCoroutine(load(num));
+    }
+
+    IEnumerator load(int num)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(0.15f);
         SceneManager.LoadScene(num);
     }
 
