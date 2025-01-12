@@ -15,13 +15,18 @@ public class PlayerController : MonoBehaviour
     public float moveDir;
     private bool prevOnSlope;
     public float slopeSnapping;
+    public float jumpHeight;
+    public bool jumping;
 
     [Header("Input")]
     public InputActionAsset playerActions;
     private InputAction moveAction;
+    private InputAction jumpAction;
 
     [Header("Groundcheck")]
     public float rayLength;
+    public bool grounded;
+    public float groundcheckHeight;
     public LayerMask groundLayerMask;
 
     [Header("Web")]
@@ -69,6 +74,8 @@ public class PlayerController : MonoBehaviour
         attachToWebAction.performed += Attach;
         shootWebAction = playerActions.FindActionMap("Basic").FindAction("ShootWeb");
         shootWebAction.performed += ShootWeb;
+        jumpAction = playerActions.FindActionMap("Basic").FindAction("Jump");
+        jumpAction.performed += Jump;
 
         //Web Actions
         moveOnWebAction = playerActions.FindActionMap("Web").FindAction("Move");
@@ -96,6 +103,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Jump(InputAction.CallbackContext ctx) {
+        if(!grounded) {
+            return;
+        }
+        jumping = true;
+        if (attached)
+        {
+            Detach();
+        }
+        rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+    }
+
     void Attach(InputAction.CallbackContext ctx)
     {
         if (attached)
@@ -112,6 +131,7 @@ public class PlayerController : MonoBehaviour
                     InitializeWebWalk(cols[0].GetComponent<WebInfo>());
                 }
             }
+            grounded = true;
         }
     }
 
@@ -143,6 +163,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            grounded = true;
             WebControl();
         }
     }
@@ -220,20 +241,27 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, groundLayerMask);
 
-        //if you're in the air
-        if (hit.normal == Vector3.zero)
+        //if you're in the air or on flat ground
+        if (hit.normal == Vector3.zero || Vector3.Angle(hit.normal, Vector3.up) < 0.1f || jumping)
         {
             rb.velocity = Vector3.MoveTowards(rb.velocity, new Vector3(moveDir * speed, rb.velocity.y, 0), Time.deltaTime * accel);
+            Debug.Log(hit.normal);
         }
-        //if you're on the ground
+        //if you're on a slope
         else
         {
             rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.Cross(hit.normal, Vector3.forward * moveDir).normalized * speed, Time.deltaTime * accel);
         }
 
+        if(Physics.Raycast(transform.position, Vector3.down, groundcheckHeight, groundLayerMask)) {
+            grounded = true;
+        } else {
+            grounded = false;
+        }
+
 
         //slope snapping
-        if (prevOnSlope != SlopeCheck(hit))
+        if (prevOnSlope != SlopeCheck(hit) && !jumping)
         {
             rb.velocity = new Vector3(rb.velocity.x, -slopeSnapping, rb.velocity.z);
         }
@@ -248,5 +276,11 @@ public class PlayerController : MonoBehaviour
 
     public void TooCloseToNode() {
 
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.layer == 6) {
+            jumping = false;
+        }
     }
 }
