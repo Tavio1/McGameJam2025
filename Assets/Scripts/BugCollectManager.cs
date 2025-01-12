@@ -8,9 +8,9 @@ public class BugCollectManager : MonoBehaviour
 {
     public static BugCollectManager instance;
 
-    [SerializeField] public TextMeshProUGUI scoreIndicator;
-    [SerializeField] public TextMeshProUGUI stopwatch;
-    [SerializeField] public TimeUpIndicator timeUp;
+    public TextMeshProUGUI scoreIndicator;
+    public TextMeshProUGUI stopwatch;
+    public TimeUpIndicator timeUp;
 
     private bool thirtyFlash = true;
     private bool tenFlash = true;
