@@ -12,12 +12,13 @@ public class DieOnContact : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("CONTACT");
         if (collision.gameObject.CompareTag("Player"))
         {
             if (BugCollectManager.instance != null)
                 BugCollectManager.instance.CollectBug(fly0Ant1);
 
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

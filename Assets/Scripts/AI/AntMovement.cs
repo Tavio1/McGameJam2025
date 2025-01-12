@@ -140,6 +140,9 @@ public class AntMovement : MonoBehaviour
             Vector3 movePos = hit.point;
             movePos.z = 0;
 
+            if (movePos == Vector3.zero)
+                return;
+
             Debug.Log($"from AI: before is {transform.position} after is {movePos} gameobject is {gameObject}");
 
             transform.position = movePos;
