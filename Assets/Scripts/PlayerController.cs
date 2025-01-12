@@ -116,20 +116,6 @@ public class PlayerController : MonoBehaviour
 
         newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
 
-        /*
-        if (attached)
-        {
-            newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
-        }
-        else if (grounded) {
-            RaycastHit hit;
-
-            //Vector3 dir = worldMousePos - origin;
-
-            Physics.Raycast(transform.position, )
-            newStartNode = spawner.SpawnWeb(WebSpawnObject.transform.position, attachedWeb);
-        } */
-
         if (newStartNode != null)
         {
             if (attached)

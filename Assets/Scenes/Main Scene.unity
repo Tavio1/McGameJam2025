@@ -4832,6 +4832,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1006694093249411806, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: jumpHeight
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006694093249411806, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: webShotDelay
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4615236221309473512, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4871,6 +4879,22 @@ PrefabInstance:
     - target: {fileID: 4615236221309473512, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: cocoonPrefab
+      value: 
+      objectReference: {fileID: 4058326352139331398, guid: 41ab624c642fcaf4fa6bc8f8592be59d, type: 3}
+    - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: maxWebLength
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: animationSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: raycastMask.m_Bits
+      value: 2624
       objectReference: {fileID: 0}
     - target: {fileID: 6054456949337680310, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
       propertyPath: m_Name
