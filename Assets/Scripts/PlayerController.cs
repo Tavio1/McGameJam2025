@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
         attached = false;
         rb.useGravity = true;
         attachedWeb = null;
+        onNode = false;
     }
 
     void InitializeWebWalk(WebInfo web)

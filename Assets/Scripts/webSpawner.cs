@@ -114,7 +114,11 @@ public class WebSpawner : MonoBehaviour
         {
             Debug.Log("script not found");
         }
-        StartCoroutine(animate(web, start, end));
+        if(runAnimations) {
+            StartCoroutine(animate(web, start, end));
+        } else {
+            web.transform.localScale = new Vector3(web.transform.localScale.x, Vector3.Distance(start, end) / 2, web.transform.localScale.z);
+        }
         return webScript.start;
     }
 
