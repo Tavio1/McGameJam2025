@@ -178,7 +178,7 @@ public class WebSpawner : MonoBehaviour
             cocoon.transform.position = cocoonPos.position;
             cocoon.transform.rotation = cocoonPos.rotation;
             cocoon.GetComponent<DieOnContact>().fly0Ant1 = isFlyMore ? 0 : 1;
-            cocoon.GetComponent<BugStats>().isGolden = true;
+            cocoon.GetComponent<BugStats>().isGolden = isGolden;
         }
     }
 }
