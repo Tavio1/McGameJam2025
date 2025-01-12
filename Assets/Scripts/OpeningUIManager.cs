@@ -20,8 +20,8 @@ public class OpeningUIManager : MonoBehaviour
         Buttons.GetComponent<CanvasGroup>().interactable = true;
     }
 
-    public void StartGame(){
-        SceneManager.LoadScene(1);
+    public void open(int num){
+        SceneManager.LoadScene(num);
     }
 
     public void ExitGame(){
