@@ -37,7 +37,7 @@ public class SlotMachine : MonoBehaviour
 
         // Decide whether or not something is won
         float gamble = Random.value;
-        if (gamble <= 0.99f){
+        if (gamble <= 0.6f){
             chosenOne = SkinsManager.instance.availableSkins[Random.Range(0, SkinsManager.instance.availableSkins.Length)];
         } else {
             chosenOne = null;
