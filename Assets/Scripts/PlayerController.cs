@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
@@ -129,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     void ShootWeb(InputAction.CallbackContext ctx)
     {
-        StartCoroutine(DelayWeb());
+        if (FindObjectOfType(typeof (PlayerController)) != null) StartCoroutine(DelayWeb());
     }
 
     IEnumerator DelayWeb() {
