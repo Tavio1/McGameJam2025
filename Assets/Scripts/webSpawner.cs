@@ -9,8 +9,10 @@ public class WebSpawner : MonoBehaviour
     public GameObject webPrefab;
     public LayerMask raycastMask;
     public float minWebLength;
+    public float maxWebLength;
     public float pullValue;
     private Vector3 endPoint;
+
 
     private Vector3 mousePos;
     private Vector3 worldMousePos;
@@ -34,7 +36,7 @@ public class WebSpawner : MonoBehaviour
             ConnectWebs(attachedTo, origin, mergedStartNode);
         }
 
-        if (Physics.Raycast(origin, dir.normalized, out hit, dir.magnitude, raycastMask))
+        if (Physics.Raycast(origin, dir.normalized, out hit, maxWebLength, raycastMask))
         {
             endPoint = hit.point;
             Debug.Log("hit point at " + hit.point);
@@ -54,13 +56,7 @@ public class WebSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("No hit detected.");
-            endPoint = worldMousePos;
-            if (Vector3.Distance(origin, endPoint) < minWebLength)
-            {
-                return null;
-            }
-            return InstantiateWeb(origin, endPoint, mergedStartNode);
+            return null;
         }
     }
 

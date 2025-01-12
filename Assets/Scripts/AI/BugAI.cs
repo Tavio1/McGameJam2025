@@ -27,7 +27,7 @@ public class BugAI : AI
 
     private Seeker seeker;
     private Rigidbody rb;
-    private PlayerController player;
+    private Transform player;
 
     // Path Movement variables
     private Path path;
@@ -64,7 +64,9 @@ public class BugAI : AI
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody>();
-        player = FindObjectOfType<PlayerController>();
+        // player = FindObjectOfType<PlayerController>();
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
         StartCoroutine(RecomputationCoroutine());
     }
@@ -129,7 +131,8 @@ public class BugAI : AI
 
     private bool IsInFleeRadius()
     {
-        return Vector3.Distance(Position, player.transform.position) < fleeRadius;
+        Debug.Log(player);
+        return Vector3.Distance(Position, player.position) < fleeRadius;
     }
 
     private void FixedUpdate()

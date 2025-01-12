@@ -189,15 +189,11 @@ public class PlayerController : MonoBehaviour
                 startNode = destNode;
                 destNode = null;
                 onNode = true;
-                //transform.position = startNode.pos;
-                Debug.Log("on end node: " + startNode.pos);
             }
             else if (startNode != null && closeToStartNode && !onNode)
             {
                 destNode = null;
                 onNode = true;
-                //transform.position = startNode.pos;
-                Debug.Log("returned to start node: " + startNode.pos);
             }
             else if (!closeToStartNode && destNode != null && !closeToEndNode)
             {
@@ -217,20 +213,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 destNode = minNode;
-                if (destNode != null)
-                {
-                    Debug.Log("dest node: " + destNode.pos);
-                }
             }
-        }
-        if (Input.GetKey(KeyCode.R))
-        {
-            string adj = "";
-            foreach (WebNode node in startNode.adjacent)
-            {
-                adj += node.pos + "\n";
-            }
-            Debug.Log(adj);
         }
     }
 
@@ -245,7 +228,6 @@ public class PlayerController : MonoBehaviour
         if (hit.normal == Vector3.zero || Vector3.Angle(hit.normal, Vector3.up) < 0.1f || jumping)
         {
             rb.velocity = Vector3.MoveTowards(rb.velocity, new Vector3(moveDir * speed, rb.velocity.y, 0), Time.deltaTime * accel);
-            Debug.Log(hit.normal);
         }
         //if you're on a slope
         else
