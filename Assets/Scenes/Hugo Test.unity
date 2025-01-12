@@ -441,6 +441,10 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: 720
       objectReference: {fileID: 0}
+    - target: {fileID: 3366148061584715720, guid: e1797b39fd5bc47adbee09a85696b4d1, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 6205442352639395446, guid: e1797b39fd5bc47adbee09a85696b4d1, type: 3}
       propertyPath: m_Name
       value: Ant

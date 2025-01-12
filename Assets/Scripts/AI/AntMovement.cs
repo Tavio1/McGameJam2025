@@ -50,7 +50,7 @@ public class AntMovement : MonoBehaviour
 
     public Vector3 RightDirection
     {
-        get => Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z) * Vector3.right;
+        get => Quaternion.Euler(0, 0, targetAngle) * Vector3.right;
     }
 
     private Vector3 LeftDirection
@@ -60,13 +60,15 @@ public class AntMovement : MonoBehaviour
 
     private Vector3 DownDirection
     {
-        get => Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z) * Vector3.down;
+        get => Quaternion.Euler(0, 0, targetAngle) * Vector3.down;
     }
 
     private Vector3 Forward
     {
         get => state == State.RIGHT ? RightDirection : LeftDirection;
     }
+
+    private float targetAngle = 0.0f;
 
     //---------------------------------------------------------------
 
@@ -110,7 +112,7 @@ public class AntMovement : MonoBehaviour
             minHit = bottomHit;
         }
 
-        MoveToHit(minHit);
+        MoveToHit(minHit, false, true);
     }
 
     private void SnapDown()
@@ -121,7 +123,7 @@ public class AntMovement : MonoBehaviour
         if (Physics.Raycast(transform.position - down * 0.3f, down, out hit,
             float.MaxValue, obstacleLayer))
         {
-            MoveToHit(hit);
+            MoveToHit(hit, true);
         }
     }
 
@@ -137,7 +139,7 @@ public class AntMovement : MonoBehaviour
         }    
     }
 
-    private void MoveToHit(RaycastHit hit, bool force = false)
+    private void MoveToHit(RaycastHit hit, bool force = false, bool snap = false)
     {
         Vector3 hitNormal = hit.normal;
         float angle = Mathf.Acos(Vector3.Dot(Vector3.up, hit.normal) / hitNormal.magnitude) * Mathf.Rad2Deg;
@@ -146,7 +148,7 @@ public class AntMovement : MonoBehaviour
             angle = -angle;
         }
 
-        if (force || !Mathf.Approximately(angle, transform.rotation.eulerAngles.z))
+        if (force || !Mathf.Approximately(angle, targetAngle))
         {
             Vector3 movePos = hit.point;
             movePos.z = 0;
@@ -154,11 +156,24 @@ public class AntMovement : MonoBehaviour
             if (movePos == Vector3.zero)
                 return;
 
-            Debug.Log($"from AI: before is {transform.position} after is {movePos} gameobject is {gameObject}");
+            //Debug.Log($"from AI: before is {transform.position} after is {movePos} gameobject is {gameObject}");
 
             transform.position = movePos;
 
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            const float THRESHOLD = 5;
+
+            targetAngle = angle;
+
+            if (snap || Mathf.Abs(transform.rotation.eulerAngles.z - angle) < THRESHOLD)
+            { 
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+                
+            }
+            else
+            {
+                StartCoroutine(RotateToWall(angle));
+            }
+
         }
     }
 
@@ -180,6 +195,39 @@ public class AntMovement : MonoBehaviour
 
         CheckWall();
 
+    }
+
+    private IEnumerator RotateToWall(float angle)
+    {
+        float angle2 = 360 + angle;
+
+        float currentAngle = transform.eulerAngles.z;
+
+        float diff = Mathf.Abs(angle - currentAngle);
+        float diff2 = Mathf.Abs(angle2 - currentAngle);
+
+        if (diff2 < diff)
+        {
+            diff = diff2;
+            angle = angle2;
+        }
+
+        //Debug.Log($"original angle {currentAngle} destination angle {angle}");
+
+        const float THRESHOLD = 2;
+        const float TIME_INTERVAL = 0.01f;
+
+        while (Mathf.Abs(angle - transform.eulerAngles.z) > THRESHOLD)
+        {
+            //currentAngle += TIME_INTERVAL * rotateSpeed;
+            currentAngle = Mathf.Lerp(currentAngle, angle, rotateSpeed / (diff * diff));
+
+            transform.rotation = Quaternion.Euler(0, 0, currentAngle);
+
+            yield return new WaitForSeconds(TIME_INTERVAL);
+        }
+
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private IEnumerator SwitchDirection()
