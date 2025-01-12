@@ -21,6 +21,7 @@ public class BugCollectManager : MonoBehaviour
     public static int totalScore = 999;
 
     public float timeLeft = 120f;
+    public bool ended;
 
     void Awake(){
         if (instance == null){
@@ -29,6 +30,7 @@ public class BugCollectManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+        ended = false;
     }
 
     /*
@@ -55,6 +57,10 @@ public class BugCollectManager : MonoBehaviour
         if(stopwatch != null) {
             stopwatch.text = string.Format("{0:00}:{1:00}", minutes,seconds);
         }
+
+        if(minutes > 0 && seconds > 0) {
+            ended = false;
+        }
         
         if (minutes == 0 && seconds == 30 && thirtyFlash){
             thirtyFlash = false;
@@ -67,7 +73,7 @@ public class BugCollectManager : MonoBehaviour
             StartCoroutine(FlashTimer(10));
         }
 
-        if (minutes <= 0 && seconds <= 0){
+        if (minutes <= 0 && seconds <= 0 & !ended){
             AudioManager.INSTANCE.stopClockTicking();
             EndGame();
         }
@@ -75,7 +81,7 @@ public class BugCollectManager : MonoBehaviour
 
     public void EndGame(){
         totalScore += score;
-
+        ended = true;
         timeUp.StartTimeUp();
     }
 
