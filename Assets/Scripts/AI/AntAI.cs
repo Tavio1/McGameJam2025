@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AntAI : MonoBehaviour
+public class AntAI : AI
 {
     [Header("AI Properties")]
     [SerializeField]
@@ -84,7 +84,8 @@ public class AntAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) < fleeRadius)
+        if (player != null &&
+            Vector3.Distance(player.transform.position, transform.position) < fleeRadius)
         {
             isFleeing = true;
 
