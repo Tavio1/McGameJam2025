@@ -16,7 +16,6 @@ public class WebSpawner : MonoBehaviour
     private Vector3 worldMousePos;
     public float animationSpeed = 3f;
 
-
     public WebNode SpawnWeb(Vector3 origin, WebInfo attachedTo)
     {
         mousePos = Input.mousePosition;
