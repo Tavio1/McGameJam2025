@@ -167,10 +167,24 @@ public class BugAI : AI
 
         rb.AddForce(force);
 
+
         float distance = toTarget.magnitude;
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
+
+            if (path.vectorPath.Count <= currentWaypoint)
+                return;
+
+            if (Vector3.Dot(path.vectorPath[currentWaypoint] - Position, Vector3.right) > 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+
         }
     }
 
