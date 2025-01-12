@@ -591,6 +591,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Closed_book (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1668162861993330090, guid: eb50fc0aafb303643bab5ee6b504007a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c2934fd84f066a469df1508d64ad86a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1715,6 +1719,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6578290730615538922, guid: 309be8358fa7f714e92097785a18313c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e837fe0656295ed4ea29d27fe4fcea56, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3556,7 +3564,7 @@ Transform:
   m_GameObject: {fileID: 688765420}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -100, y: 0, z: 2.9}
+  m_LocalPosition: {x: -105.1, y: 0, z: 2.9}
   m_LocalScale: {x: 44.871002, y: 424.03198, z: 8.13}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5057,6 +5065,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 868602041}
     m_Modifications:
+    - target: {fileID: 424818636849700096, guid: fa159725c1052ff4292d7aca4217e14c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d83175e13b617664c89eb2ff76f4658e, type: 2}
     - target: {fileID: 6787971293370041297, guid: fa159725c1052ff4292d7aca4217e14c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7329,6 +7341,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 868602041}
     m_Modifications:
+    - target: {fileID: 518633692859303786, guid: 35985f10c15372a489d14ad228128791, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8257895533537684895816bb780b8e70, type: 2}
     - target: {fileID: 3970007551812658349, guid: 35985f10c15372a489d14ad228128791, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.653115
