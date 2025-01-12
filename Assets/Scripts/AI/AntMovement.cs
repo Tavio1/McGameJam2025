@@ -163,7 +163,7 @@ public class AntMovement : MonoBehaviour
 
             if (movePos == Vector3.zero)
                 return;
-
+                
             //Debug.Log($"from AI: before is {transform.position} after is {movePos} gameobject is {gameObject}");
 
             transform.position = movePos;

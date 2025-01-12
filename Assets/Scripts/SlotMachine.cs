@@ -73,10 +73,21 @@ public class SlotMachine : MonoBehaviour
                 chosenOne == null ? "You didn't win. Try again!" 
                 : $"You won the {chosenOne.SkinName} skin!"; 
 
+            if (chosenOne == null)
+            {
+                AudioManager.INSTANCE.playGatchaFail();
+            }
+            else {
+                AudioManager.INSTANCE.playGatchaSuccess();
+            }
+
+
+            if (chosenOne != null && !SkinsManager.instance.ownedSkins.Contains(chosenOne)){
+                SkinsManager.instance.ownedSkins.Add(chosenOne);
+            }
+
         }
 
-        if (chosenOne != null && !SkinsManager.instance.ownedSkins.Contains(chosenOne)){
-            SkinsManager.instance.ownedSkins.Add(chosenOne);
-        }
+        
     }
 }

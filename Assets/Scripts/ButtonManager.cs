@@ -31,6 +31,6 @@ public class ButtonManager : MonoBehaviour
 
     void loadGame(VideoPlayer vp)
     {
-        SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(load(sceneIndex));
     }
 }

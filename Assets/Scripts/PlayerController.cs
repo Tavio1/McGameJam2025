@@ -4,12 +4,13 @@ using System.Data.Common;
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
-
+    public Collider col;
     public GameObject WebSpawnObject;
 
     [Header("Movement")]
@@ -91,6 +92,7 @@ public class PlayerController : MonoBehaviour
 
         spawner = GetComponent<WebSpawner>();
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     void PerformShootWeb (Vector3 towardsPoint){
@@ -130,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
     void ShootWeb(InputAction.CallbackContext ctx)
     {
-        StartCoroutine(DelayWeb());
+        if (FindObjectOfType(typeof (PlayerController)) != null) StartCoroutine(DelayWeb());
     }
 
     IEnumerator DelayWeb() {
@@ -195,6 +197,8 @@ public class PlayerController : MonoBehaviour
         attachedWeb = null;
         onNode = false;
         rotParent.localEulerAngles = Vector3.zero;
+        modelAni.SetTrigger("ShootWeb");
+        col.enabled = true;
     }
 
     void InitializeWebWalk(WebInfo web)
@@ -204,6 +208,7 @@ public class PlayerController : MonoBehaviour
         attachedWeb = web;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
+        col.enabled = false;
 
         startNode = web.start;
         destNode = web.end;
@@ -293,6 +298,14 @@ public class PlayerController : MonoBehaviour
             else if (!closeToStartNode && destNode != null && !closeToEndNode)
             {
                 onNode = false;
+            } else if (startNode != null && closeToStartNode && destNode != null && closeToEndNode) {
+                WebNode closer;
+                if(Vector3.Distance(startNode.pos, transform.position) < Vector3.Distance(destNode.pos, transform.position)) {
+                    closer = startNode;
+                } else {
+                    closer = destNode;
+                }
+                startNode = closer;
             }
             if (onNode)
             {
