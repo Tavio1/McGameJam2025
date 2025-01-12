@@ -10,7 +10,7 @@ using static UnityEngine.UI.Image;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
-
+    public Collider col;
     public GameObject WebSpawnObject;
 
     [Header("Movement")]
@@ -92,6 +92,7 @@ public class PlayerController : MonoBehaviour
 
         spawner = GetComponent<WebSpawner>();
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     void PerformShootWeb (Vector3 towardsPoint){
@@ -196,6 +197,8 @@ public class PlayerController : MonoBehaviour
         attachedWeb = null;
         onNode = false;
         rotParent.localEulerAngles = Vector3.zero;
+        modelAni.SetTrigger("ShootWeb");
+        col.enabled = true;
     }
 
     void InitializeWebWalk(WebInfo web)
@@ -205,6 +208,7 @@ public class PlayerController : MonoBehaviour
         attachedWeb = web;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
+        col.enabled = false;
 
         startNode = web.start;
         destNode = web.end;
