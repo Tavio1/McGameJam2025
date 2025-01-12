@@ -84,13 +84,14 @@ public class AntAI : AI
     // Update is called once per frame
     void Update()
     {
+        // Flee if in flee range
         if (player != null &&
             Vector3.Distance(player.transform.position, transform.position) < fleeRadius)
         {
             isFleeing = true;
 
             if (Vector3.Dot(antMovement.RightDirection,
-                player.transform.position - transform.position) > 0)
+                transform.position - player.transform.position) > 0)
             {
                 antMovement.MovementState = AntMovement.State.RIGHT;
             }
@@ -106,5 +107,12 @@ public class AntAI : AI
         Gizmos.color = Color.yellow;
 
         Gizmos.DrawWireSphere(transform.position, fleeRadius);
+    }
+
+    public override void Kill()
+    {
+        antMovement.WebCaught();
+        StopAllCoroutines();
+        antMovement.MovementState = AntMovement.State.STILL;
     }
 }

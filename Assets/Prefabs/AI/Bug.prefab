@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -8493179930926745676}
   - component: {fileID: -9164027980173679421}
   - component: {fileID: 3447948562408419711}
+  - component: {fileID: 5212530279257730367}
   m_Layer: 0
   m_Name: Bug
   m_TagString: Untagged
@@ -179,12 +180,14 @@ MonoBehaviour:
   nextWaypointDistance: 1
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 320
+  fleeRadius: 5
   recomputationInterval: 3
   arcAngle: 150
-  speed: 100
+  speed: 250
   wanderRadius: 3
   obstacleCheckRay: 2
+  currentWaypoint: 0
 --- !u!114 &3447948562408419711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,3 +202,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 5
   isGolden: 0
+  special: 0
+--- !u!114 &5212530279257730367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986001777519857319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53ea35a5730246548079f7323e072ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 0}

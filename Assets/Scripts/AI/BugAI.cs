@@ -24,7 +24,6 @@ public class BugAI : AI
     [SerializeField]
     private float obstacleCheckRay = 2.0f;
 
-    
 
     private Seeker seeker;
     private Rigidbody rb;
@@ -32,8 +31,8 @@ public class BugAI : AI
 
     // Path Movement variables
     private Path path;
-    int currentWaypoint = 0;
-    bool reachedEndOfPath = false;
+    public int currentWaypoint = 0;
+    private bool reachedEndOfPath = false;
 
     private Vector3 Position
     {
@@ -83,6 +82,8 @@ public class BugAI : AI
                 ComputePath();
             }
 
+            //ComputePath();
+
             yield return new WaitForSeconds(recomputationInterval);
         }
     }
@@ -95,7 +96,7 @@ public class BugAI : AI
     private void ComputeFleePath()
     {
         Vector3 fleeDir = (Position - player.transform.position).normalized;
-        seeker.StartPath(Position, Position + fleeDir * (fleeRadius / 2));
+        seeker.StartPath(Position, Position + fleeDir * wanderRadius, OnPathComplete);
     }
 
     private Vector3 GenerateWanderPoint()
@@ -148,6 +149,8 @@ public class BugAI : AI
             {
                 ComputePath();
             }
+
+            //ComputePath();
             return;
         }
         else
@@ -183,6 +186,13 @@ public class BugAI : AI
         // Flee Range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(Position, fleeRadius);
+    }
+
+    public override void Kill()
+    {
+        rb.drag += 5;
+        StopAllCoroutines();
+        path = null;
     }
 
 }

@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: -4341213039302659475}
   - component: {fileID: 7899109682937775830}
   - component: {fileID: 823751161053491876}
+  - component: {fileID: -2149987023037712540}
   m_Layer: 0
   m_Name: Ant
   m_TagString: Untagged
@@ -328,7 +329,7 @@ MonoBehaviour:
   meshParent: {fileID: 3297863791386097687}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   snapDistance: 1
   snapCooldown: 0.5
 --- !u!114 &-4341213039302659475
@@ -388,3 +389,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 3
   isGolden: 0
+  special: 0
+--- !u!114 &-2149987023037712540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205442352639395446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53ea35a5730246548079f7323e072ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 0}

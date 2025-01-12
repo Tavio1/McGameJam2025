@@ -72,10 +72,13 @@ public class AntMovement : MonoBehaviour
         RaycastHit topHit;
         RaycastHit bottomHit;
 
-        Physics.Raycast(transform.position, Vector3.right, out rightHit, float.MaxValue, obstacleLayer);
-        Physics.Raycast(transform.position, Vector3.left, out leftHit, float.MaxValue, obstacleLayer);
-        Physics.Raycast(transform.position, Vector3.up, out topHit, float.MaxValue, obstacleLayer);
-        Physics.Raycast(transform.position, Vector3.down, out bottomHit, float.MaxValue, obstacleLayer);
+        bool success = Physics.Raycast(transform.position, Vector3.right, out rightHit, float.MaxValue, obstacleLayer);
+        success = Physics.Raycast(transform.position, Vector3.left, out leftHit, float.MaxValue, obstacleLayer) || success;
+        success = Physics.Raycast(transform.position, Vector3.up, out topHit, float.MaxValue, obstacleLayer) || success;
+        success = Physics.Raycast(transform.position, Vector3.down, out bottomHit, float.MaxValue, obstacleLayer) || success; ;
+
+        if (!success)
+            return;
 
         // Getting closest wall hit
         RaycastHit minHit = rightHit;
@@ -94,23 +97,9 @@ public class AntMovement : MonoBehaviour
         if (bottomHit.distance < minDistance)
         {
             minHit = bottomHit;
-            minDistance = bottomHit.distance;
         }
 
-        transform.position = minHit.point;
-
-        Vector3 hitNormal = minHit.normal;
-        hitNormal.z = 0;
-
-        float angle = Mathf.Acos(Vector3.Dot(Vector3.up, hitNormal) / hitNormal.magnitude) * Mathf.Rad2Deg;
-
-        if (Vector3.Cross(Vector3.up, hitNormal).z < 0)
-        {
-            angle = -angle;
-        }
-
-        Debug.Log(angle);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        MoveToHit(minHit);
     }
 
     private void SnapDown()
@@ -134,7 +123,7 @@ public class AntMovement : MonoBehaviour
         }    
     }
 
-    private void MoveToHit(RaycastHit hit)
+    private void MoveToHit(RaycastHit hit, bool force = false)
     {
         Vector3 hitNormal = hit.normal;
         float angle = Mathf.Acos(Vector3.Dot(Vector3.up, hit.normal) / hitNormal.magnitude) * Mathf.Rad2Deg;
@@ -143,7 +132,7 @@ public class AntMovement : MonoBehaviour
             angle = -angle;
         }
 
-        if (!Mathf.Approximately(angle, transform.rotation.eulerAngles.z))
+        if (force || !Mathf.Approximately(angle, transform.rotation.eulerAngles.z))
         {
             Vector3 movePos = hit.point;
             movePos.z = 0;
@@ -173,5 +162,10 @@ public class AntMovement : MonoBehaviour
 
         CheckWall();
 
+    }
+
+    public void WebCaught()
+    {
+        rb.drag += 5;
     }
 }
