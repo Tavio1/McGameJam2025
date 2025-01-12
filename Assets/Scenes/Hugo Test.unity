@@ -451,11 +451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7048527661227677823, guid: e1797b39fd5bc47adbee09a85696b4d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.62
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7048527661227677823, guid: e1797b39fd5bc47adbee09a85696b4d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.382032
+      value: 6.83
       objectReference: {fileID: 0}
     - target: {fileID: 7048527661227677823, guid: e1797b39fd5bc47adbee09a85696b4d1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 2007120547}
   - component: {fileID: 2007120546}
   - component: {fileID: 2007120545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
