@@ -21,6 +21,7 @@ public class TimeUpIndicator : MonoBehaviour
         cg = timeUp.GetComponent<CanvasGroup>();
         cg.alpha = 0f;
         timeUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(-500,0);
+        BugCollectManager.instance.timeUp = this;
     }
 
 
