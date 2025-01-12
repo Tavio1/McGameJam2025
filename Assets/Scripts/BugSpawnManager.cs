@@ -82,7 +82,12 @@ public class BugSpawnManager : MonoBehaviour
 
         // Check for spawning a golden insect
         if (UnityEngine.Random.value <= 0.1){
-            bug.GetComponent<Renderer>().material = goldMaterial;
+            
+            Renderer[] renderers = bug.GetComponentsInChildren<Renderer>();
+            foreach (Renderer rend in renderers){
+                rend.material = goldMaterial;
+            }
+
             bug.GetComponent<BugStats>().isGolden = true;
 
             minimapIcon.GetComponent<Image>().color = new Color(0.93f, 0.71f, 0.29f);
