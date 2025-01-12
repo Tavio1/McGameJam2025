@@ -95,6 +95,11 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<Collider>();
     }
 
+    void OnDisable() {
+        Debug.Log("disable actions");
+        playerActions.Disable();
+    }
+
     void PerformShootWeb (Vector3 towardsPoint){
         if (onNode)
         {
