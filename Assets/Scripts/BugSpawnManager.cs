@@ -26,6 +26,9 @@ public class BugSpawnManager : MonoBehaviour
     [SerializeField] Material goldMaterial;
     [SerializeField] Material[] Outlines;
 
+    [SerializeField] float respawnTimerFly = 90.0f;
+    [SerializeField] float respawnTimerAnt = 90.0f;
+
     float flySpawnTimer = 5f;
     float antSpawnTimer = 5f;
 
@@ -43,14 +46,14 @@ public class BugSpawnManager : MonoBehaviour
         antSpawnTimer -= Time.deltaTime;
 
         if (flySpawnTimer <= 0f){
-            flySpawnTimer = 5f;
+            flySpawnTimer = respawnTimerFly;
 
             Spawn(0, findSpawnLocation());
             // Debug.Log("fly spawned");
         }
 
         if (antSpawnTimer <= 0f){
-            antSpawnTimer = 5f;
+            antSpawnTimer = respawnTimerAnt;
 
             Spawn(1,findSpawnLocation());
             // Debug.Log("ant spawned");

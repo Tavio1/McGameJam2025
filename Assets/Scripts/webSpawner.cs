@@ -139,6 +139,8 @@ public class WebSpawner : MonoBehaviour
             yield return null;
         }
 
+        AudioManager.INSTANCE.playWebCollide();
+
         web.transform.localScale = new Vector3(initScale.x, targetLength, initScale.z);
     }
 }

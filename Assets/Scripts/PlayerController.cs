@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        AudioManager.INSTANCE.playWebShoot();
+
         Collider[] cols = Physics.OverlapSphere(transform.position, 0.05f, webLayerMask, QueryTriggerInteraction.Collide);
         if (attached && cols.Length > 0 && cols[0].gameObject.tag == "Web")
         {
@@ -194,10 +196,12 @@ public class PlayerController : MonoBehaviour
             MovementControl();
             if (grounded && moveDir != 0f)
             {
+                AudioManager.INSTANCE.startWalkOnGround();
                 modelAni.SetBool("Moving", true);
             }
             else
             {
+                AudioManager.INSTANCE.stopWalkingSound();
                 modelAni.SetBool("Moving", false);
             }
         }
@@ -207,10 +211,12 @@ public class PlayerController : MonoBehaviour
             WebControl();
             if (webMoveDir != Vector2.zero)
             {
+                AudioManager.INSTANCE.startWalkOnWeb();
                 modelAni.SetBool("Moving", true);
             }
             else
             {
+                AudioManager.INSTANCE.stopWalkingSound();   
                 modelAni.SetBool("Moving", false);
             }
         }
