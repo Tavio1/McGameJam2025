@@ -452,6 +452,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2907f8645b77359418aca3dc65f4208f, type: 2}
   - {fileID: 11400000, guid: 856d656e7197fdd4788e6f56ffc3dc76, type: 2}
   - {fileID: 11400000, guid: c60f73f567789814f9fbc56646a4aa5c, type: 2}
+  selectedSkin: {fileID: 0}
 --- !u!4 &776597045
 Transform:
   m_ObjectHideFlags: 0

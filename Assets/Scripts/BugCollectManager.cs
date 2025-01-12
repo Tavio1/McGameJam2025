@@ -20,7 +20,7 @@ public class BugCollectManager : MonoBehaviour
 
     public static int totalScore = 999;
 
-    public float timeLeft = 90f;
+    public float timeLeft = 120f;
 
     void Awake(){
         if (instance == null){
@@ -60,15 +60,18 @@ public class BugCollectManager : MonoBehaviour
 
         if (minutes == 0 && seconds == 10 && tenFlash){
             tenFlash = false;
+            AudioManager.INSTANCE.startClockTicking();
             StartCoroutine(FlashTimer(10));
         }
 
         if (minutes <= 0 && seconds <= 0){
+            AudioManager.INSTANCE.stopClockTicking();
             EndGame();
         }
     }
 
     public void EndGame(){
+
         this.enabled = false;
         totalScore += score;
 
