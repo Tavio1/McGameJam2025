@@ -77,6 +77,19 @@ public class AntMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         SnapAllDirections();
+
+        StartCoroutine(SnapCoroutine());
+    }
+
+    private IEnumerator SnapCoroutine()
+    {
+        const float INTERVAL = 1.5f;
+        while (true)
+        {
+            yield return new WaitForSeconds(INTERVAL);
+
+            SnapAllDirections();
+        }
     }
 
     private void SnapAllDirections()
@@ -86,10 +99,12 @@ public class AntMovement : MonoBehaviour
         RaycastHit topHit;
         RaycastHit bottomHit;
 
-        bool success = Physics.Raycast(transform.position, Vector3.right, out rightHit, float.MaxValue, obstacleLayer);
-        success = Physics.Raycast(transform.position, Vector3.left, out leftHit, float.MaxValue, obstacleLayer) || success;
-        success = Physics.Raycast(transform.position, Vector3.up, out topHit, float.MaxValue, obstacleLayer) || success;
-        success = Physics.Raycast(transform.position, Vector3.down, out bottomHit, float.MaxValue, obstacleLayer) || success; ;
+        const float MULT = 0.3f;
+
+        bool success = Physics.Raycast(transform.position + Vector3.left * MULT, Vector3.right, out rightHit, float.MaxValue, obstacleLayer);
+        success = Physics.Raycast(transform.position + Vector3.right * MULT, Vector3.left, out leftHit, float.MaxValue, obstacleLayer) || success;
+        success = Physics.Raycast(transform.position + Vector3.down * MULT, Vector3.up, out topHit, float.MaxValue, obstacleLayer) || success;
+        success = Physics.Raycast(transform.position + Vector3.up * MULT, Vector3.down, out bottomHit, float.MaxValue, obstacleLayer) || success; ;
 
         if (!success)
             return;
@@ -115,6 +130,8 @@ public class AntMovement : MonoBehaviour
 
         MoveToHit(minHit, false, true);
     }
+
+    
 
     private void SnapDown()
     {
