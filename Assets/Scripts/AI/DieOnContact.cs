@@ -15,7 +15,7 @@ public class DieOnContact : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             if (BugCollectManager.instance != null)
-                BugCollectManager.instance.CollectBug(fly0Ant1);
+                BugCollectManager.instance.CollectBug(fly0Ant1, GetComponent<BugStats>().isGolden);
 
             Destroy(gameObject);
         }

@@ -37,8 +37,12 @@ public class BugCollectManager : MonoBehaviour
     i = 0: denotes a fly collected
     i = 1: denotes an ant collected
     */
-    public void CollectBug(int i){
-        score += i == 0 ? 5 : 7;
+    public void CollectBug(int i, bool isGolden = false){
+        int newScore = i == 0 ? 5 : 7;
+        if (isGolden)
+            newScore *= 3;
+
+        score += newScore;
         scoreIndicator.text = $"Score: {score}";
     }
 
