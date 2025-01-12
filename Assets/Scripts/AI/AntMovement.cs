@@ -106,9 +106,12 @@ public class AntMovement : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 down = DownDirection;
-        Physics.Raycast(transform.position - down * 0.1f, down, out hit, float.MaxValue, obstacleLayer);
 
-        MoveToHit(hit);
+        if (Physics.Raycast(transform.position - down * 0.3f, down, out hit,
+            float.MaxValue, obstacleLayer))
+        {
+            MoveToHit(hit);
+        }
     }
 
     private void CheckWall()
@@ -140,8 +143,6 @@ public class AntMovement : MonoBehaviour
             Debug.Log($"from AI: before is {transform.position} after is {movePos} gameobject is {gameObject}");
 
             transform.position = movePos;
-
-            
 
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }

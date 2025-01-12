@@ -29,22 +29,22 @@ public class WebSpawner : MonoBehaviour
         Vector3 dir = worldMousePos - origin;
         RaycastHit hit;
 
-        WebNode mergedStartNode = null;
-        if(attachedTo != null) {
-            origin += dir.normalized * pullValue;
-            mergedStartNode = new WebNode(origin);
-            ConnectWebs(attachedTo, origin, mergedStartNode);
-        }
-
         if (Physics.Raycast(origin, dir.normalized, out hit, maxWebLength, raycastMask))
         {
+            WebNode mergedStartNode = null;
+            if (attachedTo != null)
+            {
+                origin += dir.normalized * pullValue;
+                mergedStartNode = new WebNode(origin);
+                ConnectWebs(attachedTo, origin, mergedStartNode);
+            }
             endPoint = hit.point;
             Debug.Log("hit point at " + hit.point);
             if (Vector3.Distance(origin, endPoint) < minWebLength)
             {
                 return null;
             }
-            WebInfo otherWeb = hit.transform.GetComponent<WebInfo>();;
+            WebInfo otherWeb = hit.transform.GetComponent<WebInfo>(); ;
             WebNode mergedNode = null;
             if (otherWeb != null)
             {
@@ -101,7 +101,8 @@ public class WebSpawner : MonoBehaviour
             {
                 webScript.end = endNode;
             }
-            if(setAdjacencies) {
+            if (setAdjacencies)
+            {
                 webScript.start.addAdjacent(webScript.end);
                 webScript.end.addAdjacent(webScript.start);
             }
@@ -110,9 +111,12 @@ public class WebSpawner : MonoBehaviour
         {
             Debug.Log("script not found");
         }
-        if(runAnimations) {
+        if (runAnimations)
+        {
             StartCoroutine(animate(web, start, end));
-        } else {
+        }
+        else
+        {
             web.transform.localScale = new Vector3(web.transform.localScale.x, Vector3.Distance(start, end) / 2, web.transform.localScale.z);
         }
         return webScript.start;
@@ -124,14 +128,14 @@ public class WebSpawner : MonoBehaviour
         float currLength = 0;
         Vector3 initScale = web.transform.localScale;
 
-        while(currLength < targetLength)
+        while (currLength < targetLength)
         {
             currLength += animationSpeed * Time.deltaTime;
             float actualLength = Mathf.Min(currLength, targetLength);
             web.transform.localScale = new Vector3(initScale.x, actualLength, initScale.z);
 
             Vector3 midpoint = start + (end - start).normalized * actualLength * 2 / 2;
-            web.transform.position = midpoint; 
+            web.transform.position = midpoint;
             yield return null;
         }
 
