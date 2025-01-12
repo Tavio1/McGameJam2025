@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class BugAI : MonoBehaviour
+public class BugAI : AI
 {
     [SerializeField]
     private float nextWaypointDistance = 1.0f;
