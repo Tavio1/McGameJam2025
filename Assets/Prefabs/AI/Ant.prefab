@@ -32,37 +32,6 @@ Transform:
   - {fileID: 3746996035456220685}
   m_Father: {fileID: 7048527661227677823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6062717976199237013
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3013589870652515957}
-  m_Layer: 11
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3013589870652515957
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6062717976199237013}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7048527661227677823}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6205442352639395446
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,6 +47,7 @@ GameObject:
   - component: {fileID: 823751161053491876}
   - component: {fileID: -2149987023037712540}
   - component: {fileID: -2122320435255659161}
+  - component: {fileID: 2207438978206020636}
   m_Layer: 11
   m_Name: Ant
   m_TagString: Untagged
@@ -99,7 +69,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3297863791386097687}
-  - {fileID: 3013589870652515957}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1485921936234352252
@@ -116,12 +85,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   speed: 150
+  rotateSpeed: 360
   meshParent: {fileID: 3297863791386097687}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 320
   snapDistance: 1
   snapCooldown: 0.5
+  directionState: 0
 --- !u!114 &-4341213039302659475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +128,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2368
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -209,6 +180,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   fly0Ant1: 0
+--- !u!65 &2207438978206020636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205442352639395446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.43688625, z: 0.5912889}
+  m_Center: {x: 0, y: 0.34047708, z: -0.020488799}
 --- !u!1001 &3713983667359930854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -432,39 +424,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 034fa87a72c6645979d6e8e746a1da49, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3874789886193697969}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 034fa87a72c6645979d6e8e746a1da49, type: 3}
 --- !u!4 &3746996035456220685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 034fa87a72c6645979d6e8e746a1da49, type: 3}
   m_PrefabInstance: {fileID: 3713983667359930854}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4560969559319405751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 034fa87a72c6645979d6e8e746a1da49, type: 3}
-  m_PrefabInstance: {fileID: 3713983667359930854}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &3874789886193697969
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4560969559319405751}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.798525, y: 2.7696774, z: 6.7027655}
-  m_Center: {x: 0.07733076, y: -0.39304838, z: -2.851378}
