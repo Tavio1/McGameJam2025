@@ -20,7 +20,7 @@ public class BugCollectManager : MonoBehaviour
 
     public static int totalScore = 999;
 
-    public float timeLeft = 90f;
+    public float timeLeft = 120f;
 
     void Awake(){
         if (instance == null){
@@ -37,8 +37,12 @@ public class BugCollectManager : MonoBehaviour
     i = 0: denotes a fly collected
     i = 1: denotes an ant collected
     */
-    public void CollectBug(int i){
-        score += i == 0 ? 5 : 7;
+    public void CollectBug(int i, bool isGolden = false){
+        int newScore = i == 0 ? 5 : 7;
+        if (isGolden)
+            newScore *= 3;
+
+        score += newScore;
         scoreIndicator.text = $"Score: {score}";
     }
 
@@ -60,15 +64,18 @@ public class BugCollectManager : MonoBehaviour
 
         if (minutes == 0 && seconds == 10 && tenFlash){
             tenFlash = false;
+            AudioManager.INSTANCE.startClockTicking();
             StartCoroutine(FlashTimer(10));
         }
 
         if (minutes <= 0 && seconds <= 0){
+            AudioManager.INSTANCE.stopClockTicking();
             EndGame();
         }
     }
 
     public void EndGame(){
+
         this.enabled = false;
         totalScore += score;
 
