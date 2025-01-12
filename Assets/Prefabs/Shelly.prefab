@@ -218,7 +218,7 @@ MonoBehaviour:
   accel: 90
   moveDir: 0
   slopeSnapping: 6
-  jumpHeight: 2.5
+  jumpHeight: 3
   jumping: 0
   playerActions: {fileID: -944628639613478452, guid: b32760c7d0f5469418d40127484c456f, type: 3}
   rayLength: 0.8
@@ -229,7 +229,7 @@ MonoBehaviour:
     m_Bits: 64
   attached: 0
   spawner: {fileID: 5789347652835797015}
-  webShotDelay: 0.5
+  webShotDelay: 0.25
   webSpeed: 10
   webMoveDir: {x: 0, y: 0}
   radiusToAttach: 0.5
@@ -255,13 +255,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   webPrefab: {fileID: 6418143378129473256, guid: cbec51a274de53b4eaba72fbef9aaf42, type: 3}
+  cocoonPrefab: {fileID: 4058326352139331398, guid: 41ab624c642fcaf4fa6bc8f8592be59d, type: 3}
   raycastMask:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 2624
   minWebLength: 0.4
-  maxWebLength: 50
+  maxWebLength: 15
   pullValue: 0.2
-  animationSpeed: 25
+  animationSpeed: 50
 --- !u!95 &5249859147035773484
 Animator:
   serializedVersion: 5
