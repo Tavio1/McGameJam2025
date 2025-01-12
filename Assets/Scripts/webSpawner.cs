@@ -27,9 +27,10 @@ public class WebSpawner : MonoBehaviour
         worldMousePos.z = 0;
 
         Vector3 dir = worldMousePos - origin;
-        RaycastHit hit;
+        RaycastHit hitForward;
+        RaycastHit hitBackward;
 
-        if (Physics.Raycast(origin, dir.normalized, out hit, maxWebLength, raycastMask))
+        if (Physics.Raycast(origin, dir.normalized, out hitForward, maxWebLength, raycastMask))
         {
             WebNode mergedStartNode = null;
             if (attachedTo != null)
@@ -38,13 +39,22 @@ public class WebSpawner : MonoBehaviour
                 mergedStartNode = new WebNode(origin);
                 ConnectWebs(attachedTo, origin, mergedStartNode);
             }
-            endPoint = hit.point;
-            Debug.Log("hit point at " + hit.point);
+            else if (Physics.Raycast(origin, -dir.normalized, out hitBackward, 1.0f, raycastMask))
+            {
+                origin = hitBackward.point;
+            }
+            else {
+                origin -= new Vector3(0, 0.5f, 0);
+            }
+
+            endPoint = hitForward.point;
+            
+            //Debug.Log("hit point at " + hitForward.point);
             if (Vector3.Distance(origin, endPoint) < minWebLength)
             {
                 return null;
             }
-            WebInfo otherWeb = hit.transform.GetComponent<WebInfo>(); ;
+            WebInfo otherWeb = hitForward.transform.GetComponent<WebInfo>(); ;
             WebNode mergedNode = null;
             if (otherWeb != null)
             {

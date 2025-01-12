@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void PerformShootWeb (){
+    void PerformShootWeb (Vector3 towardsPoint){
         if (onNode)
         {
             TooCloseToNode();
@@ -113,13 +114,21 @@ public class PlayerController : MonoBehaviour
 
         WebNode newStartNode = null;
 
+        newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
+
+        /*
         if (attached)
         {
             newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
         }
         else if (grounded) {
+            RaycastHit hit;
+
+            //Vector3 dir = worldMousePos - origin;
+
+            Physics.Raycast(transform.position, )
             newStartNode = spawner.SpawnWeb(WebSpawnObject.transform.position, attachedWeb);
-        } 
+        } */
 
         if (newStartNode != null)
         {
@@ -139,8 +148,21 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DelayWeb() {
         modelAni.SetTrigger("ShootWeb");
+
+        Vector3 mousePos = getWorldMousePos();
+
         yield return new WaitForSeconds(webShotDelay);
-        PerformShootWeb();
+        PerformShootWeb(mousePos);
+    }
+
+    private Vector3 getWorldMousePos() {
+        Vector3 mousePos = Input.mousePosition;
+
+        mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldMousePos.z = 0;
+
+        return worldMousePos;
     }
 
     void Jump(InputAction.CallbackContext ctx)
