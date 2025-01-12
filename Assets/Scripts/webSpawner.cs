@@ -14,6 +14,7 @@ public class WebSpawner : MonoBehaviour
 
     private Vector3 mousePos;
     private Vector3 worldMousePos;
+    public float animationSpeed = 3f;
 
     void SpawnWeb()
     {
