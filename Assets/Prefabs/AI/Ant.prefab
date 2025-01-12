@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: -1485921936234352252}
   - component: {fileID: -4341213039302659475}
   - component: {fileID: 7899109682937775830}
+  - component: {fileID: 823751161053491876}
   m_Layer: 0
   m_Name: Ant
   m_TagString: Untagged
@@ -373,3 +374,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &823751161053491876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205442352639395446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8784462fe4610944f874a09ff5d3882b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 3
+  isGolden: 0

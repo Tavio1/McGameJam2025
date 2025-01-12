@@ -7,8 +7,8 @@ public class MinimapSystem : MonoBehaviour
     [SerializeField] RectTransform playerMini;
     [SerializeField] Transform player;
 
-    public const float mapWidth = 800f;
-    public const float mapHeight = 600f;
+    public const float mapWidth = 80f;
+    public const float mapHeight = 80f;
 
 
     // Update is called once per frame

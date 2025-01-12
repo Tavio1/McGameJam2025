@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using cakeslice;
+using UnityEngine.UI;
 
 public class BugSpawnManager : MonoBehaviour
 {
@@ -18,6 +20,10 @@ public class BugSpawnManager : MonoBehaviour
     // 0: fly, 1: ant
     [SerializeField] GameObject[] bugPrefabs;
     [SerializeField] GameObject[] bugMiniPrefabs;
+
+
+    [Header("Materials")]
+    [SerializeField] Material goldMaterial;
 
     float flySpawnTimer = 0f;
     float antSpawnTimer = 0f;
@@ -41,15 +47,13 @@ public class BugSpawnManager : MonoBehaviour
         if (antSpawnTimer <= 0f){
             antSpawnTimer = 5f;
 
-
-
+            Spawn(1,findSpawnLocation());
             // Debug.Log("ant spawned");
         }
     }
 
 
     private Transform findSpawnLocation(){
-
         Func<Transform, bool> isOffscreen = (Transform t) =>
         {
             Vector3 screenPoint = Camera.main.WorldToViewportPoint(t.position);
@@ -65,16 +69,39 @@ public class BugSpawnManager : MonoBehaviour
         return offscreenTransforms[UnityEngine.Random.Range(0, offscreenTransforms.Length)];
     }
 
+
+
     // Spawn Function
     private void Spawn(int i, Transform location){
         GameObject bugPrefab = bugPrefabs[i];
-
-        Debug.Log($"Bug Type: {bugPrefab} Location: {location.gameObject}");
-
         GameObject bug = Instantiate(bugPrefab, location.position, Quaternion.identity, bugsParent);
 
+
+        GameObject minimapIcon = Instantiate(bugMiniPrefabs[i], miniMap); 
+        minimapIcon.GetComponent<BugMinimap>().Initialize(bug.transform);
+
+        // Check for spawning a golden insect
+        if (UnityEngine.Random.value <= 0.1){
+            bug.GetComponent<Renderer>().material = goldMaterial;
+            bug.GetComponent<BugStats>().isGolden = true;
+
+            minimapIcon.GetComponent<Image>().color = new Color(0.93f, 0.71f, 0.29f);
+            return;
+        }
+
+
+        // Check for spawning one with power up
+        if (UnityEngine.Random.value <= 0.1){
+            cakeslice.Outline outline = bug.AddComponent(typeof(cakeslice.Outline)) as cakeslice.Outline;
+
+            // Color: 0=red, 1=green, 2=blue
+            int type = UnityEngine.Random.Range(0, 3);
+            outline.color = type;
+            return;
+        }
+
+        
         // Create an icon on minimap
-        Instantiate(bugMiniPrefabs[i], miniMap).GetComponent<BugMinimap>().Initialize(bug.transform);
     }
 
 }
