@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a0568ca33683054bb2e5012e2f66bfb, type: 3}
+  m_Name: GooglyEyes
+  m_EditorClassIdentifier: 
+  SkinName: Googly Eyes
+  SkinMaterial: {fileID: 2100000, guid: 6b9daee9d4a6de5448c82a9818b6ecc3, type: 2}

@@ -451,7 +451,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c546bb71740f38144bf4b104e037466f, type: 2}
   - {fileID: 11400000, guid: 2907f8645b77359418aca3dc65f4208f, type: 2}
   - {fileID: 11400000, guid: 856d656e7197fdd4788e6f56ffc3dc76, type: 2}
-  - {fileID: 11400000, guid: c60f73f567789814f9fbc56646a4aa5c, type: 2}
   selectedSkin: {fileID: 0}
 --- !u!4 &776597045
 Transform:
@@ -602,6 +601,10 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 2067782590}
+    - target: {fileID: 3932270514924544004, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
+      propertyPath: m_text
+      value: 5 Points
+      objectReference: {fileID: 0}
     - target: {fileID: 4600342609924437208, guid: 4ae6c6a2124aae241906c78242247631, type: 3}
       propertyPath: m_Name
       value: Gacha Menu
