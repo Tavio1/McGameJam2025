@@ -44,7 +44,7 @@ public class TimeUpIndicator : MonoBehaviour
         LeanTween.alphaCanvas(fadeBlack,1f,1f).setIgnoreTimeScale(true);
         yield return new WaitForSecondsRealtime(1f);
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
 
     }
 }

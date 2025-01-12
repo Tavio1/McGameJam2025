@@ -11,10 +11,16 @@ public class OpeningUIManager : MonoBehaviour
     public float duration;
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
+        Time.timeScale = 1f;
+        end.ResetTrigger("Start");
         end.SetTrigger("Start");
-
+        StartCoroutine(buttonAnim());
+    }
+    
+    IEnumerator buttonAnim()
+    {
         LeanTween.alphaCanvas(Buttons.GetComponent<CanvasGroup>(), 1f, 1.5f)
         .setIgnoreTimeScale(true);
         LeanTween.moveY(Buttons,160f,1.5f)
