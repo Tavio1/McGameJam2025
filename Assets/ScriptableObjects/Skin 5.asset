@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0568ca33683054bb2e5012e2f66bfb, type: 3}
   m_Name: Skin 5
   m_EditorClassIdentifier: 
-  SkinName: Skin 5
+  SkinName: Mouse Shelly
   SkinMaterial: {fileID: 0}

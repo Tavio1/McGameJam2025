@@ -13,6 +13,8 @@ public class ShellySkinManager : MonoBehaviour
         Skin skin = SkinsManager.instance.selectedSkin;
         string skinname = skin == null ? null : skin.name;
 
+        Debug.Log("this script is reached");
+
         switch (skinname)
         {
             case "Golden Shelly":
@@ -24,7 +26,7 @@ public class ShellySkinManager : MonoBehaviour
                 break;
 
             default:
-                
+
 
                 break;
         }   
