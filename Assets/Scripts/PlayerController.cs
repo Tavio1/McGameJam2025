@@ -298,6 +298,14 @@ public class PlayerController : MonoBehaviour
             else if (!closeToStartNode && destNode != null && !closeToEndNode)
             {
                 onNode = false;
+            } else if (startNode != null && closeToStartNode && destNode != null && closeToEndNode) {
+                WebNode closer;
+                if(Vector3.Distance(startNode.pos, transform.position) < Vector3.Distance(destNode.pos, transform.position)) {
+                    closer = startNode;
+                } else {
+                    closer = destNode;
+                }
+                startNode = closer;
             }
             if (onNode)
             {
