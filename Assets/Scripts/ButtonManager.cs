@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.EditorCoroutines.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
@@ -11,6 +10,7 @@ public class ButtonManager : MonoBehaviour
     public int sceneIndex;
     public Animator start;
     public Animator end;
+    public float duration;
 
 
     private void Start()
@@ -25,7 +25,7 @@ public class ButtonManager : MonoBehaviour
     IEnumerator load(int num)
     {
         start.SetTrigger("Start");
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(duration);
         SceneManager.LoadScene(num);
     }
 
@@ -33,5 +33,4 @@ public class ButtonManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneIndex);
     }
-
 }
