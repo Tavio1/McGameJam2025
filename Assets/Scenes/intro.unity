@@ -373,7 +373,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709634859}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 89714888522d99e418c5c5f8f239f212, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 8881b100d90da214695d72c7de5f672d, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 2032337519}
@@ -382,7 +382,7 @@ VideoPlayer:
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 1
-  m_AspectRatio: 2
+  m_AspectRatio: 1
   m_DataSource: 0
   m_TimeUpdateMode: 1
   m_PlaybackSpeed: 1
