@@ -11,8 +11,10 @@ public class ExteriorFade : MonoBehaviour
 
     
     void OnTriggerEnter(Collider other){
-        if (other.tag != "Player") return;
 
+        Debug.Log("entered");
+        if (other.tag != "Player") return;
+        Debug.Log("and is player");
         FadeMat(false);
     }
 
@@ -28,7 +30,7 @@ public class ExteriorFade : MonoBehaviour
     }
 
     IEnumerator FadeSequence(bool fadeIn){
-        if (fadeIn){
+        if (!fadeIn){
 
             float Alpha = 1f;
 
