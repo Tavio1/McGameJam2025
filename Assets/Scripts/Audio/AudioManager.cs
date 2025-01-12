@@ -129,6 +129,16 @@ public class AudioManager : MonoBehaviour
         UISource.PlayOneShot(UISFX["GatchaRollFail"], 0.2f);
     }
 
+    public void playGatchaSuccess()
+    {
+        UISource.PlayOneShot(UISFX["GatchaSuccess"], 0.2f);
+    }
+
+    public void playGatchaFail()
+    {
+        UISource.PlayOneShot(UISFX["GatchaFail"], 0.2f);
+    }
+
     public void startMainMenuMusic() {
         // source should be at 0.007
         startSourceWithLoopingClip(BackgroundSource, BackgroundSFX["MainMenuMusic"]);
