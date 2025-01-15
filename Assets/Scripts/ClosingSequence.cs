@@ -22,6 +22,7 @@ public class ClosingSequence : MonoBehaviour
         cg.alpha = 0f;        
 
         points.text = $"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points";
+        points.SetText($"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points");
 
         LeanTween.alphaCanvas(cg, 1f, 1f).setIgnoreTimeScale(true);
         LeanTween.moveLocalY(points.gameObject, -75, 1f).setIgnoreTimeScale(true);

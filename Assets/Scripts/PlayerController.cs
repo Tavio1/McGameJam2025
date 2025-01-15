@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     private WebInfo attachedWeb;
     private WebNode startNode;
     private WebNode destNode;
+
+    private List<WebNode> adjacentNodes;
     public bool onNode;
 
     private bool closeToStartNode
@@ -92,22 +94,21 @@ public class PlayerController : MonoBehaviour
         //Web Actions
         moveOnWebAction = playerActions.FindActionMap("Web").FindAction("Move");
 
+        adjacentNodes = new List<WebNode>();
+
         spawner = GetComponent<WebSpawner>();
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         Debug.Log("disable actions");
         playerActions.Disable();
     }
 
-    void PerformShootWeb (Vector3 towardsPoint){
-        if (onNode)
-        {
-            TooCloseToNode();
-            return;
-        }
+    void PerformShootWeb()
+    {
         if (!attached && !grounded)
         {
             return;
@@ -122,37 +123,31 @@ public class PlayerController : MonoBehaviour
             attachedWeb = cols[0].GetComponent<WebInfo>();
         }
 
-        WebNode newStartNode = null;
+        WebNode newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
 
-        newStartNode = spawner.SpawnWeb(transform.position, attachedWeb);
-
-        if (newStartNode != null)
+        if (newStartNode != null && attached)
         {
-            if (attached)
-            {
-                transform.position = newStartNode.pos;
-                startNode = newStartNode;
-                destNode = null;
-            }
+            transform.position = newStartNode.pos;
+            startNode = newStartNode;
+            destNode = null;
         }
     }
 
     void ShootWeb(InputAction.CallbackContext ctx)
     {
-        if (FindObjectOfType(typeof (PlayerController)) != null && webShotCooldown <= 0) StartCoroutine(DelayWeb());
+        if (FindObjectOfType(typeof(PlayerController)) != null && webShotCooldown <= 0) StartCoroutine(DelayWeb());
     }
 
-    IEnumerator DelayWeb() {
+    IEnumerator DelayWeb()
+    {
         webShotCooldown = webShotCooldownTime;
         modelAni.SetTrigger("ShootWeb");
-
-        Vector3 mousePos = getWorldMousePos();
-
         yield return new WaitForSeconds(webShotDelay);
-        PerformShootWeb(mousePos);
+        PerformShootWeb();
     }
 
-    private Vector3 getWorldMousePos() {
+    private Vector3 getWorldMousePos()
+    {
         Vector3 mousePos = Input.mousePosition;
 
         mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -250,12 +245,13 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                AudioManager.INSTANCE.stopWalkingSound();   
+                AudioManager.INSTANCE.stopWalkingSound();
                 modelAni.SetBool("Moving", false);
             }
         }
-        
-        if(webShotCooldown > 0) {
+
+        if (webShotCooldown > 0)
+        {
             webShotCooldown -= Time.fixedDeltaTime;
         }
 
@@ -264,12 +260,11 @@ public class PlayerController : MonoBehaviour
     void PointTowards(Vector3 dest)
     {
         float rotX = Vector3.Angle(Vector3.left, (dest - transform.position).normalized);
-        if(dest.y < transform.position.y) {
+        if (dest.y < transform.position.y)
+        {
             rotX *= -1;
         }
-        rotParent.localRotation = Quaternion.Euler(rotX,0,0);
-        // rotParent.localEulerAngles = Vector3.zero;
-        // rotParent.Rotate(new Vector3(rotX, 0, 0));
+        rotParent.localRotation = Quaternion.Euler(rotX, 0, 0);
     }
 
     void WebControl()
@@ -282,14 +277,16 @@ public class PlayerController : MonoBehaviour
             {
                 if (Vector3.Angle(webMoveDir, destNode.pos - startNode.pos) < movementAngle)
                 {
-                    if(moveOnWebAction.phase == InputActionPhase.Started) {
+                    if (moveOnWebAction.phase == InputActionPhase.Started)
+                    {
                         PointTowards(destNode.pos);
                     }
                     transform.position = Vector3.MoveTowards(transform.position, destNode.pos, Time.deltaTime * webSpeed);
                 }
                 else if (Vector3.Angle(webMoveDir, startNode.pos - destNode.pos) < movementAngle)
                 {
-                    if(moveOnWebAction.phase == InputActionPhase.Started) {
+                    if (moveOnWebAction.phase == InputActionPhase.Started)
+                    {
                         PointTowards(startNode.pos);
                     }
                     transform.position = Vector3.MoveTowards(transform.position, startNode.pos, Time.deltaTime * webSpeed);
@@ -309,11 +306,16 @@ public class PlayerController : MonoBehaviour
             else if (!closeToStartNode && destNode != null && !closeToEndNode)
             {
                 onNode = false;
-            } else if (startNode != null && closeToStartNode && destNode != null && closeToEndNode) {
+            }
+            else if (startNode != null && closeToStartNode && destNode != null && closeToEndNode)
+            {
                 WebNode closer;
-                if(Vector3.Distance(startNode.pos, transform.position) < Vector3.Distance(destNode.pos, transform.position)) {
+                if (Vector3.Distance(startNode.pos, transform.position) < Vector3.Distance(destNode.pos, transform.position))
+                {
                     closer = startNode;
-                } else {
+                }
+                else
+                {
                     closer = destNode;
                 }
                 startNode = closer;
@@ -330,6 +332,10 @@ public class PlayerController : MonoBehaviour
                         minNode = node;
                         minAngle = angle;
                     }
+                }
+                if (destNode != minNode)
+                {
+                    transform.position = startNode.pos;
                 }
                 destNode = minNode;
             }

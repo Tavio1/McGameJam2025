@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class WebSpawner : MonoBehaviour
     public LayerMask raycastMask;
     public float minWebLength;
     public float maxWebLength;
+    public float minNodeDistance;
     public float pullValue;
     private Vector3 endPoint;
 
@@ -32,47 +34,66 @@ public class WebSpawner : MonoBehaviour
         RaycastHit hitForward;
         RaycastHit hitBackward;
 
-        if (Physics.Raycast(origin, dir.normalized, out hitForward, maxWebLength, raycastMask)) {
+        if (Physics.Raycast(origin, dir.normalized, out hitForward, maxWebLength, raycastMask))
+        {
 
             // If you hit a bug
-            if (hitForward.collider.gameObject.layer == 11) {
+            if (hitForward.collider.gameObject.layer == 11)
+            {
                 Debug.Log("Bug Hit!");
                 hitForward.collider.gameObject.tag = "BugToCocoon";
-                WebNode tempWeb = InstantiateWeb(origin, hitForward.point, null, null, true, false, true);
+                InstantiateWeb(origin, hitForward.point, null, null, true, false, true);
                 return null;
             }
 
+            #region  Start Node
+
+            WebNode closestToOrigin = findClosestNodeTo(origin);
+            bool originCloseToNode = closestToOrigin != null ? Vector3.Distance(closestToOrigin.pos, origin) < minNodeDistance : false;
+
             WebNode mergedStartNode = null;
-            if (attachedTo != null)
+            if (attachedTo != null && !originCloseToNode)
             {
                 origin += dir.normalized * pullValue;
-                mergedStartNode = new WebNode(origin);
-                ConnectWebs(attachedTo, origin, mergedStartNode);
+                mergedStartNode = SplitWeb(attachedTo, origin);
+            }
+            else if (originCloseToNode)
+            {
+                mergedStartNode = closestToOrigin;
             }
             else if (Physics.Raycast(origin, -dir.normalized, out hitBackward, 1.0f, raycastMask))
             {
                 origin = hitBackward.point;
             }
-            else {
+            else
+            {
                 origin -= new Vector3(0, 0.5f, 0);
             }
+            #endregion
 
+            #region End Node
             endPoint = hitForward.point;
-            
-            //Debug.Log("hit point at " + hitForward.point);
+
+            WebNode closestToEnd = findClosestNodeTo(endPoint);
+            bool endCloseToNode = closestToEnd != null ? Vector3.Distance(closestToEnd.pos, endPoint) < minNodeDistance : false;
+
             if (Vector3.Distance(origin, endPoint) < minWebLength)
             {
                 return null;
             }
-            WebInfo otherWeb = hitForward.transform.GetComponent<WebInfo>(); ;
-            WebNode mergedNode = null;
-            if (otherWeb != null)
+            WebInfo otherWeb = hitForward.transform.GetComponent<WebInfo>();
+            WebNode mergedEndNode = null;
+            if (otherWeb != null && !endCloseToNode)
             {
                 endPoint -= dir.normalized * pullValue;
-                mergedNode = new WebNode(endPoint);
-                ConnectWebs(otherWeb, endPoint, mergedNode);
+                mergedEndNode = SplitWeb(otherWeb, endPoint);
             }
-            return InstantiateWeb(origin, endPoint, mergedStartNode, mergedNode);
+            else if (endCloseToNode)
+            {
+                mergedEndNode = closestToEnd;
+            }
+            #endregion
+            return InstantiateWeb(origin, endPoint, mergedStartNode, mergedEndNode);
         }
         else
         {
@@ -80,19 +101,30 @@ public class WebSpawner : MonoBehaviour
         }
     }
 
-    public void ConnectWebs(WebInfo other, Vector3 contactPoint, WebNode mergedNode)
+    //returns new WebNode
+    public WebNode SplitWeb(WebInfo other, Vector3 contactPoint)
     {
+        WebNode mergedNode = new WebNode(contactPoint);
+
+        //old start node
         WebNode oldStartNode = other.start;
         oldStartNode.removeAdjacent(other.end);
         oldStartNode.addAdjacent(mergedNode);
+
+        //old end node
         WebNode oldEndNode = other.end;
         oldEndNode.removeAdjacent(other.start);
         oldEndNode.addAdjacent(mergedNode);
+
+        //merged node
         mergedNode.addAdjacent(oldEndNode);
         mergedNode.addAdjacent(oldStartNode);
+
         InstantiateWeb(other.start.pos, contactPoint, oldStartNode, mergedNode, false, false);
         InstantiateWeb(contactPoint, other.end.pos, mergedNode, oldEndNode, false, false);
         Destroy(other.gameObject);
+
+        return mergedNode;
     }
 
     WebNode InstantiateWeb(Vector3 start, Vector3 end, WebNode startNode = null, WebNode endNode = null, bool runAnimations = true, bool setAdjacencies = true, bool deleteAfter = false)
@@ -105,7 +137,7 @@ public class WebSpawner : MonoBehaviour
         WebInfo webScript = web.GetComponent<WebInfo>();
         if (webScript != null)
         {
-            if (startNode == null)
+            if (startNode == null && !deleteAfter)
             {
                 webScript.start = new WebNode(start);
             }
@@ -113,7 +145,8 @@ public class WebSpawner : MonoBehaviour
             {
                 webScript.start = startNode;
             }
-            if (endNode == null)
+
+            if (endNode == null && !deleteAfter)
             {
                 webScript.end = new WebNode(end);
             }
@@ -121,6 +154,7 @@ public class WebSpawner : MonoBehaviour
             {
                 webScript.end = endNode;
             }
+
             if (setAdjacencies)
             {
                 webScript.start.addAdjacent(webScript.end);
@@ -180,5 +214,22 @@ public class WebSpawner : MonoBehaviour
             cocoon.GetComponent<DieOnContact>().fly0Ant1 = isFlyMore ? 0 : 1;
             cocoon.GetComponent<BugStats>().isGolden = isGolden;
         }
+    }
+
+    public WebNode findClosestNodeTo(Vector3 pos)
+    {
+        if (WebManager.Instance.nodes.Count == 0)
+        {
+            return null;
+        }
+        WebNode closest = WebManager.Instance.nodes[0];
+        foreach (WebNode other in WebManager.Instance.nodes)
+        {
+            if (Vector3.Distance(pos, other.pos) < Vector3.Distance(pos, closest.pos))
+            {
+                closest = other;
+            }
+        }
+        return closest;
     }
 }

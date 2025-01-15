@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using UnityEngine;
-
 public class WebNode
 {
     public Vector3 pos;
@@ -12,6 +11,7 @@ public class WebNode
     public WebNode(Vector3 p) {
         pos = p;
         adjacent = new List<WebNode>();
+        WebManager.Instance.nodes.Add(this);
     }
 
     public void addAdjacent(WebNode webNode) {
