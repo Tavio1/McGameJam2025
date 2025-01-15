@@ -16,6 +16,7 @@ public class ClosingSequence : MonoBehaviour
 
     // Start is called before the first frame update
     IEnumerator Start(){
+        AudioManager.INSTANCE.startMainMenuMusic();
         CanvasGroup cg = points.GetComponent<CanvasGroup>();
         points.rectTransform.anchoredPosition = new Vector2(0,-130);
         cg.alpha = 0f;        
