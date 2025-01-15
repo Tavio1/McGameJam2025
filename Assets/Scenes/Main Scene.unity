@@ -6632,6 +6632,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
+      propertyPath: minNodeDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789347652835797015, guid: 4668285274bdfc643a7e2f27bf0a7f99, type: 3}
       propertyPath: raycastMask.m_Bits
       value: 2624
       objectReference: {fileID: 0}
@@ -9847,7 +9851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc538844fd012a47a1dd7e927323630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes: []
 --- !u!1 &1549112419
 GameObject:
   m_ObjectHideFlags: 0
