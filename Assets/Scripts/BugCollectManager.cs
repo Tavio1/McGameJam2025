@@ -16,7 +16,7 @@ public class BugCollectManager : MonoBehaviour
     private bool tenFlash = true;
 
     public static int score = 0;
-    public static int highScore;
+    public static int highScore = 0;
 
     public static int totalScore = 0;
 

@@ -36,6 +36,14 @@ public class ClosingSequence : MonoBehaviour
             int score = BugCollectManager.score;
             int high = BugCollectManager.highScore;
 
+            if (score > high)
+            {
+                highScore.text = "New High Score!";
+                BugCollectManager.highScore = score;
+            }
+            else
+                highScore.text = "High Score: " + BugCollectManager.highScore.ToString();
+
             highScore.text = 
                 score > high ?  
                     "New High Score!" :
@@ -47,10 +55,10 @@ public class ClosingSequence : MonoBehaviour
         LeanTween.alphaCanvas(highScore.GetComponent<CanvasGroup>(),1f,0.8f);
         yield return new WaitForSecondsRealtime(0.4f);
 
-        LeanTween.moveY(overlay, 300, 0.5f).setIgnoreTimeScale(true);
+        LeanTween.moveLocalY(overlay, 0, 0.5f).setIgnoreTimeScale(true);
         yield return new WaitForSecondsRealtime(0.5f);
 
-        LeanTween.moveY(overlay, 320, 0.15f).setIgnoreTimeScale(true);
+        LeanTween.moveLocalY(overlay, 20, 0.15f).setIgnoreTimeScale(true);
 
     }
 

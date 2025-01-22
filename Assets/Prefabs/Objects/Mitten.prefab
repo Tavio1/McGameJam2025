@@ -85,6 +85,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mittens_HALF
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79a43825fe02b654084235eecabe5acf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -143,6 +147,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1f80e673e31019941a9c13183ccd6f9f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: feab6b28341880a4d9048246be77b07e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 1f80e673e31019941a9c13183ccd6f9f, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4cab392bf54a75e439aa741f2e919c2a, type: 2}
     - target: {fileID: 919132149155446097, guid: 1f80e673e31019941a9c13183ccd6f9f, type: 3}
       propertyPath: m_Name
       value: Mittens_FULL
