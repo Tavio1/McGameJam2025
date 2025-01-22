@@ -40,7 +40,7 @@ public class SwitchSkinMenu : MonoBehaviour
 
 
     public void UseThisSkin(SkinOption skin){
-        selectedSkin.text = skin.SkinName;
+        selectedSkin.text = skin.skin.SkinName;
         SkinsManager.instance.selectedSkin = skin.skin;
     }
 
