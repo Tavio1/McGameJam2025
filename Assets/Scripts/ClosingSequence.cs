@@ -16,13 +16,15 @@ public class ClosingSequence : MonoBehaviour
 
     // Start is called before the first frame update
     IEnumerator Start(){
-        AudioManager.INSTANCE.startMainMenuMusic();
         CanvasGroup cg = points.GetComponent<CanvasGroup>();
         points.rectTransform.anchoredPosition = new Vector2(0,-130);
-        cg.alpha = 0f;        
+        cg.alpha = 0f;
 
-        points.text = $"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points";
-        points.SetText($"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points");
+        //Debug.Log("Does exist: " + BugCollectManager.instance != null);
+        //Debug.Log("Score: " + BugCollectManager.score);
+        //points.text = $"{(BugCollectManager.instance != null ? BugCollectManager.score : 5)} points";
+        //points.SetText($"{(BugCollectManager.instance == null ? 5 : BugCollectManager.score)} points");
+        points.text = BugCollectManager.score.ToString() + " points";
 
         LeanTween.alphaCanvas(cg, 1f, 1f).setIgnoreTimeScale(true);
         LeanTween.moveLocalY(points.gameObject, -75, 1f).setIgnoreTimeScale(true);
@@ -53,7 +55,7 @@ public class ClosingSequence : MonoBehaviour
     }
 
 
-    // 0 for menu, 1 for play again
+    // 1 for menu, 2 for play again
     public void PlayAgainAndMenu(int scene){
         StartCoroutine(SwitchScene(scene));
     }

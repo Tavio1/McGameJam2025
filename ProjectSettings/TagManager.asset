@@ -20,8 +20,8 @@ TagManager:
   - transition
   - Bug
   - Cocoon
-  - 
-  - 
+  - Background Mask
+  - Background Objects
   - 
   - 
   - 
@@ -42,4 +42,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Mask
+    uniqueID: 4025941285
+    locked: 0
+  - name: PlayerArea
+    uniqueID: 4204535049
     locked: 0
