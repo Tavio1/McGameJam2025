@@ -37,7 +37,7 @@ public class BugSpawnManager : MonoBehaviour
         spawnLocations[0] = spawnLocations[1];
 
         foreach (Transform t in spawnLocations){
-            Debug.Log(t.position);
+            //Debug.Log(t.position);
         }
     }
 
@@ -81,12 +81,12 @@ public class BugSpawnManager : MonoBehaviour
 
     // Spawn Function
     private void Spawn(int i, Transform location){
-        Debug.Log($"Location picked: {location.position}");
+        //Debug.Log($"Location picked: {location.position}");
 
         GameObject bugPrefab = bugPrefabs[i];
         GameObject bug = Instantiate(bugPrefab, location.position, Quaternion.identity, bugsParent);
 
-        Debug.Log($"the bug's position is {bug.transform.position} and location is {location.position} and bug is {bug}");
+        //Debug.Log($"the bug's position is {bug.transform.position} and location is {location.position} and bug is {bug}");
         GameObject minimapIcon = Instantiate(bugMiniPrefabs[i], miniMap); 
         minimapIcon.GetComponent<BugMinimap>().Initialize(bug.transform);
 

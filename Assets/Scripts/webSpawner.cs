@@ -40,7 +40,7 @@ public class WebSpawner : MonoBehaviour
             // If you hit a bug
             if (hitForward.collider.gameObject.layer == 11)
             {
-                Debug.Log("Bug Hit!");
+                //Debug.Log("Bug Hit!");
                 hitForward.collider.gameObject.tag = "BugToCocoon";
                 InstantiateWeb(origin, hitForward.point, null, null, true, false, true);
                 return null;
@@ -200,7 +200,7 @@ public class WebSpawner : MonoBehaviour
 
         if (deleteAfter)
         {
-            Debug.Log("Deleting!");
+            //Debug.Log("Deleting!");
             Destroy(web);
             GameObject bug = GameObject.FindGameObjectWithTag("BugToCocoon");
             Transform cocoonPos = bug.transform;

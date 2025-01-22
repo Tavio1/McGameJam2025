@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDisable()
     {
-        Debug.Log("disable actions");
+        //Debug.Log("disable actions");
         playerActions.Disable();
     }
 

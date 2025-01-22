@@ -131,7 +131,7 @@ public class BugAI : AI
 
     private bool IsInFleeRadius()
     {
-        Debug.Log(player);
+        //Debug.Log(player);
         return Vector3.Distance(Position, player.position) < fleeRadius;
     }
 

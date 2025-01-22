@@ -258,7 +258,7 @@ public class AntMovement : MonoBehaviour
                     angle = angle2;
             }
 
-            Debug.Log($"original angle {currentAngle} destination angle {angle}");
+            //Debug.Log($"original angle {currentAngle} destination angle {angle}");
 
             const float THRESHOLD = 5;
             const float TIME_INTERVAL = 0.01f;
@@ -275,7 +275,7 @@ public class AntMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            Debug.Log("DONE");
+            //Debug.Log("DONE");
 
             isRotating = false;
         }

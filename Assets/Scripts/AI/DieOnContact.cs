@@ -11,7 +11,7 @@ public class DieOnContact : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("CONTACT");
+        //Debug.Log("CONTACT");
         if (collision.gameObject.CompareTag("Player"))
         {
             if (BugCollectManager.instance != null)
