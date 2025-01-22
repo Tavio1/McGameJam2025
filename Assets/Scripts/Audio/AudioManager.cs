@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -63,11 +64,15 @@ public class AudioManager : MonoBehaviour
             BackgroundSFX.Add(BackgroundSFXNames[i], BackgroundSFXClips[i]);
         }
 
+        if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            INSTANCE.startMainMenuMusic();
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 2) 
+        {
+            INSTANCE.startClassroomAmbient();
+        }
 
-        // Start the background music
-        //BackgroundSource.mute = true;
-        //startMainMenuMusic();
-        startClassroomAmbient();
         
     }
 

@@ -21,8 +21,6 @@ public class ClosedMenuManager : MonoBehaviour
 
         skinCG.alpha = 0f;
         gachaCG.alpha = 0f;
-
-        AudioManager.INSTANCE.startMainMenuMusic();
     }    
 
 
